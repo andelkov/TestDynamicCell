@@ -10,11 +10,11 @@ import UIKit
 
 class HomeViewModel {
 
-    func returnImageAsset(imageIndex: Int) -> UIImage {
+    func returnImageAsset(index: Int) -> UIImage {
         
-        if imageIndex <= 15 {
+        if index < MockData.frameworks.count {
         
-            let image = UIImage(named: MockData.frameworks[imageIndex].imageName)
+            let image = UIImage(named: MockData.frameworks[index].imageName)
         
             return image!
             
@@ -25,19 +25,32 @@ class HomeViewModel {
         }
     }
     
-    func returnImageName(imageIndex: Int) -> String {
+    func returnImageName(index: Int) -> String {
         
-        if imageIndex <= 15 {
+        if index < MockData.frameworks.count {
         
-            let imageName = MockData.frameworks[imageIndex].name
+            let imageName = MockData.frameworks[index].name
         
             return imageName
             
-        } else {
-            
-            return MockData.frameworks[0].name
-            
         }
+        else {
+            return MockData.frameworks[0].name
+        }
+    }
+    
+    func returnAssetUrl(index: Int) -> URL {
+        
+        let returnUrl: URL
+        
+        if index < MockData.frameworks.count {
+            guard let url = URL(string: MockData.frameworks[index].urlString) else { return MockData.safeUrl! }
+            returnUrl = url
+            
+        } else { returnUrl = MockData.safeUrl!}
+        
+        return returnUrl
+            
     }
     
     
@@ -45,13 +58,13 @@ class HomeViewModel {
         
         switch section {
         case .main:
-            return (1...10).map { index -> OrganizedData in
+            return (1..<10).map { index -> OrganizedData in
                 return OrganizedData(title: MockData.frameworks[index].name ,
                             subtitle: MockData.frameworks[index].description,
                                 image: UIImage(named: MockData.frameworks[index].imageName)!)
             }
         case .second:
-            return (10...14).map { index -> OrganizedData in
+            return (10..<MockData.frameworks.count).map { index -> OrganizedData in
                 return OrganizedData(title: MockData.frameworks[index].name,
                             subtitle: MockData.frameworks[index].description,
                                      image: UIImage(named: MockData.frameworks[index].imageName)!)
@@ -60,8 +73,13 @@ class HomeViewModel {
         
     }
         
+        
+}
+    
+   
+        
             
         
-    }
+
     
 

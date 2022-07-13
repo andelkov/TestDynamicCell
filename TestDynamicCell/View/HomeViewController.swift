@@ -87,5 +87,10 @@ extension HomeViewController {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return MockData.frameworks.count
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presentSafariVC(with: homeViewModel.returnAssetUrl(index: indexPath.row))
+        
+    }
 
 }

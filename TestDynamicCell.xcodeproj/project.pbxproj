@@ -17,6 +17,7 @@
 		89BE8B4A287DAC7000957B99 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE8B49287DAC7000957B99 /* HomeViewModel.swift */; };
 		89BE8B4C287E9F3D00957B99 /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE8B4B287E9F3D00957B99 /* CustomCollectionViewCell.swift */; };
 		89BE8B53287EC3CB00957B99 /* OrganizedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE8B52287EC3CB00957B99 /* OrganizedData.swift */; };
+		89BE8B57287EF2B600957B99 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE8B56287EF2B600957B99 /* UIViewController+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		89BE8B49287DAC7000957B99 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		89BE8B4B287E9F3D00957B99 /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
 		89BE8B52287EC3CB00957B99 /* OrganizedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizedData.swift; sourceTree = "<group>"; };
+		89BE8B56287EF2B600957B99 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 		89BE8B30287C5C5800957B99 /* TestDynamicCell */ = {
 			isa = PBXGroup;
 			children = (
+				89BE8B55287EF29D00957B99 /* Extensions */,
 				89BE8B4E287EA0E100957B99 /* View */,
 				89BE8B4D287EA0CB00957B99 /* Model */,
 				89BE8B54287EE59600957B99 /* ViewModel */,
@@ -109,6 +112,14 @@
 				89BE8B49287DAC7000957B99 /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		89BE8B55287EF29D00957B99 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				89BE8B56287EF2B600957B99 /* UIViewController+Ext.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -188,6 +199,7 @@
 				89BE8B48287DA2B600957B99 /* MockData.swift in Sources */,
 				89BE8B4C287E9F3D00957B99 /* CustomCollectionViewCell.swift in Sources */,
 				89BE8B32287C5C5800957B99 /* AppDelegate.swift in Sources */,
+				89BE8B57287EF2B600957B99 /* UIViewController+Ext.swift in Sources */,
 				89BE8B34287C5C5800957B99 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

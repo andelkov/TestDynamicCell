@@ -18,6 +18,8 @@ struct Framework: Hashable, Identifiable {
 
 struct MockData: Hashable {
     
+    static let safeUrl = URL(string: "https://developer.apple.com")
+    
     static let sampleFramework = Framework(name: "CarPlay",
                                   imageName: "carplay",
                                   urlString: "https://developer.apple.com/carplay",
