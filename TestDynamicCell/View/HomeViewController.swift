@@ -68,9 +68,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func configureViewController() {
-        view.translatesAutoresizingMaskIntoConstraints = false
-        collectionView?.translatesAutoresizingMaskIntoConstraints = false
-            
+        
         view.backgroundColor    = .systemBackground
         title                   = "Lorem Ipsum"
         navigationController?.navigationBar.prefersLargeTitles = true
