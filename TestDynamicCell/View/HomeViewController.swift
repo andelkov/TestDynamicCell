@@ -13,7 +13,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     private var collectionView: UICollectionView?
     var datasource: UICollectionViewDiffableDataSource<Section, OrganizedData>!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,7 +51,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
         
         datasource = UICollectionViewDiffableDataSource<Section, OrganizedData> (collectionView: collectionView!,
-           cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
+                                                                                 cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
             
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
         })
@@ -62,8 +62,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, OrganizedData>()
         snapshot.appendSections([.main, .second])
-        snapshot.appendItems(mainSectionItems, toSection: .main)
-        snapshot.appendItems(secondSectionItems, toSection: .second)
+        snapshot.appendItems(HomeViewModel.returnSectionItems(section: .main), toSection: .main)
+        snapshot.appendItems(HomeViewModel.returnSectionItems(section: .second), toSection: .second)
         datasource.apply(snapshot, animatingDifferences: false)
     }
     
@@ -77,20 +77,21 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
 }
 
 extension HomeViewController {
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCollectionViewCell", for: indexPath) as! CustomCollectionViewCell
-
+        
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return MockData.frameworks.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         presentSafariVC(with: homeViewModel.returnAssetUrl(index: indexPath.row))
-        
+        collectionView.deselectItem(at: indexPath, animated: true)
     }
-
+    
+    
 }

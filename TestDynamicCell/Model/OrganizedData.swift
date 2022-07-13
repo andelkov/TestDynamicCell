@@ -13,14 +13,10 @@ enum Section {
 }
 
 struct OrganizedData: Hashable {
-   var title: String
-   var subtitle: String
-   var image: UIImage
+    var title: String
+    var subtitle: String
+    var image: UIImage
 }
-
-var mainSectionItems    = HomeViewModel.returnSectionItems(section: .main)
-var secondSectionItems  = HomeViewModel.returnSectionItems(section: .second)
-
 
 
 

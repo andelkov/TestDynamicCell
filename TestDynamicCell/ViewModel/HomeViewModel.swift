@@ -9,13 +9,13 @@ import Foundation
 import UIKit
 
 class HomeViewModel {
-
+    
     func returnImageAsset(index: Int) -> UIImage {
         
         if index < MockData.frameworks.count {
-        
+            
             let image = UIImage(named: MockData.frameworks[index].imageName)
-        
+            
             return image!
             
         } else {
@@ -28,9 +28,9 @@ class HomeViewModel {
     func returnImageName(index: Int) -> String {
         
         if index < MockData.frameworks.count {
-        
+            
             let imageName = MockData.frameworks[index].name
-        
+            
             return imageName
             
         }
@@ -50,7 +50,7 @@ class HomeViewModel {
         } else { returnUrl = MockData.safeUrl!}
         
         return returnUrl
-            
+        
     }
     
     
@@ -60,26 +60,26 @@ class HomeViewModel {
         case .main:
             return (1..<10).map { index -> OrganizedData in
                 return OrganizedData(title: MockData.frameworks[index].name ,
-                            subtitle: MockData.frameworks[index].description,
-                                image: UIImage(named: MockData.frameworks[index].imageName)!)
+                                     subtitle: MockData.frameworks[index].description,
+                                     image: UIImage(named: MockData.frameworks[index].imageName)!)
             }
         case .second:
-            return (10..<MockData.frameworks.count).map { index -> OrganizedData in
+            return (10...15).map { index -> OrganizedData in
                 return OrganizedData(title: MockData.frameworks[index].name,
-                            subtitle: MockData.frameworks[index].description,
+                                     subtitle: MockData.frameworks[index].description,
                                      image: UIImage(named: MockData.frameworks[index].imageName)!)
             }
         }
         
     }
-        
-        
+    
+    
 }
-    
-   
-        
-            
-        
 
-    
+
+
+
+
+
+
 
