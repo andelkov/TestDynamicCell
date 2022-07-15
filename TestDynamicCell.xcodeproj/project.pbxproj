@@ -26,6 +26,7 @@
 		89BE8B72288023C400957B99 /* FrameworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE8B71288023C400957B99 /* FrameworkRepository.swift */; };
 		89BE8B752880254900957B99 /* FrameworkRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE8B742880254900957B99 /* FrameworkRepositoryImpl.swift */; };
 		89BE8B78288144C000957B99 /* FrameworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE8B77288144C000957B99 /* FrameworkService.swift */; };
+		89DD677A2881A22E007FC491 /* Configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DD67792881A22E007FC491 /* Configurable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		89BE8B71288023C400957B99 /* FrameworkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkRepository.swift; sourceTree = "<group>"; };
 		89BE8B742880254900957B99 /* FrameworkRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkRepositoryImpl.swift; sourceTree = "<group>"; };
 		89BE8B77288144C000957B99 /* FrameworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkService.swift; sourceTree = "<group>"; };
+		89DD67792881A22E007FC491 /* Configurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Configurable.swift; path = TestDynamicCell/Home/Data/Service/Configurable.swift; sourceTree = SOURCE_ROOT; };
 		9F55419826851485CEEEFF6F /* Pods_TestDynamicCell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDynamicCell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6E8CE4AEB2FFF3E22D75CC6 /* Pods-TestDynamicCell.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDynamicCell.debug.xcconfig"; path = "Target Support Files/Pods-TestDynamicCell/Pods-TestDynamicCell.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -201,6 +203,7 @@
 		89BE8B6328801A2C00957B99 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				89DD67782881A215007FC491 /* Protocol */,
 				89BE8B55287EF29D00957B99 /* Extensions */,
 			);
 			path = Common;
@@ -254,13 +257,20 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		89DD67782881A215007FC491 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				89DD67792881A22E007FC491 /* Configurable.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		AD3EF2D58EDB5D487F00024B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				C6E8CE4AEB2FFF3E22D75CC6 /* Pods-TestDynamicCell.debug.xcconfig */,
 				321ECCDA7C1B568D87F2CED6 /* Pods-TestDynamicCell.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -388,6 +398,7 @@
 			files = (
 				89BE8B78288144C000957B99 /* FrameworkService.swift in Sources */,
 				89BE8B59288004C800957B99 /* LoginViewController.swift in Sources */,
+				89DD677A2881A22E007FC491 /* Configurable.swift in Sources */,
 				89BE8B36287C5C5800957B99 /* HomeViewController.swift in Sources */,
 				89BE8B752880254900957B99 /* FrameworkRepositoryImpl.swift in Sources */,
 				89BE8B4A287DAC7000957B99 /* HomeViewModelImpl.swift in Sources */,
@@ -469,7 +480,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -523,7 +534,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

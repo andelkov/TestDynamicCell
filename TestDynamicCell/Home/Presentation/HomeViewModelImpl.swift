@@ -10,21 +10,17 @@ import UIKit
 protocol HomeViewModel {
     var dataCount: Int {get}
     
-    func returnImageDescription(index: Int) -> String
-    func returnImageAsset(index: Int) -> UIImage
-    func returnImageName(index: Int) -> String
-    func returnAssetUrl(index: Int) -> URL
+    func loadData()
+    func getCellData(index: Int) -> CustomCollectionViewCell.Data?
     func getInitialData() -> NSDiffableDataSourceSnapshot<Section, OrganizedData>
 }
 
 class HomeViewModelImpl: HomeViewModel {
-    
-    typealias HomeViewData = NSDiffableDataSourceSnapshot<Section, OrganizedData>             // di ovo stavit i da ne bude errora
-    
-    var dataCount: Int {MockData.frameworks.count}
-    private lazy var frameworks : [Framework] = FrameworkServiceImpl.shared.getFrameworks()  //jel dobro ovako spremiti u sve u jednu varijablu pa da onda FrameworkService mora samo jednom                                                                                           posao napraviti
+  
+    var dataCount: Int {frameworks.count}
     private let getFrameworksUseCase: GetFrameworksUseCase
-    private let mapper: HomeViewModelMapper                                                  //INFO: ne raditi instanciranje propetije, nego preko contructora
+    private var frameworks : [Framework] = []
+    private let mapper: HomeViewModelMapper
     
     public init(getFrameworksUseCase: GetFrameworksUseCase,
          mapper: HomeViewModelMapper) {
@@ -33,62 +29,16 @@ class HomeViewModelImpl: HomeViewModel {
         self.mapper = mapper
     }
     
-    func returnImageDescription(index: Int) -> String {
-        
-        if index < self.frameworks.count {
-            
-            let description = self.frameworks[index].description
-            
-            return description
-            
-        } else {
-            
-            return self.frameworks[0].description
-            
-        }
+    func loadData() {
+        self.frameworks = getFrameworksUseCase.execute()
     }
     
-    func returnImageAsset(index: Int) -> UIImage {
-        
-        if index < self.frameworks.count {
-            
-            let image = UIImage(named: self.frameworks[index].imageName)
-            
-            return image!
-            
-        } else {
-            
-            return UIImage(named: self.frameworks[index].imageName)!
-            
+    func getCellData(index: Int) -> CustomCollectionViewCell.Data? {
+        guard index < self.frameworks.count else {
+            return nil
         }
-    }
-    
-    func returnImageName(index: Int) -> String {
         
-        if index < self.frameworks.count {
-            
-            let imageName = self.frameworks[index].name
-            
-            return imageName
-            
-        }
-        else {
-            return self.frameworks[index].name
-        }
-    }
-    
-    func returnAssetUrl(index: Int) -> URL {
-        
-        let returnUrl: URL
-        
-        if index < frameworks.count {
-            guard let url = URL(string: self.frameworks[index].urlString) else { return MockData.safeUrl! }  //jel ovdje kršim neko pravilo Designa time što pristup MockData.safeURL
-            returnUrl = url
-            
-        } else { returnUrl = MockData.safeUrl!}
-        
-        return returnUrl
-        
+        return mapper.mapCellData(from: self.frameworks[index])
     }
     
     func getInitialData() -> HomeViewData {

@@ -8,7 +8,7 @@
 import UIKit
 
 
-// ovo sam probao iskoristiti pa sam odustao, jer sam našao jednostavnije rješenje
+//
 
 class CustomCollectionViewCell: UICollectionViewCell {
     
@@ -60,4 +60,21 @@ class CustomCollectionViewCell: UICollectionViewCell {
         myLabel.text = nil
         myImageView.image = nil
     }
+}
+
+extension CustomCollectionViewCell: Configurable {
+    
+    struct Data {
+        let title: String
+        let description: String
+        let image: UIImage?
+        let url: URL?
+    }
+    
+    func configure(with data: Data) {
+       // imageTitle = data.imageTitle
+        // imageDescription
+    }
+    
+    
 }

@@ -37,10 +37,11 @@ final class HomeViewController: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureViewController()
-        applyInitialData()
         
+        configureViewController()
+        self.homeViewModel.loadData()
         view.addSubview(collectionView)
+        applyInitialData()
     }
     
     private func configureDataSource() -> UICollectionViewDiffableDataSource<Section, OrganizedData> {
@@ -48,7 +49,7 @@ final class HomeViewController: UIViewController  {
             
             var content = cell.defaultContentConfiguration() //snapkit ovdje sve
             
-            content.text = self.homeViewModel.returnImageName(index: indexPath.row)
+            content.text = self.homeViewModel.getCellData(index: IndexPath.row)
             content.secondaryText = self.homeViewModel.returnImageDescription(index: indexPath.row)
             content.image = self.homeViewModel.returnImageAsset(index: indexPath.row)
             

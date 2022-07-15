@@ -9,6 +9,7 @@ import UIKit
 
 protocol HomeViewModelMapper {
     func returnSectionItems (section: Section) -> [OrganizedData]
+    func mapCellData(from framework: Framework) -> CustomCollectionViewCell.Data
 }
 
 final class HomeViewModelMapperImpl: HomeViewModelMapper {
@@ -31,6 +32,15 @@ final class HomeViewModelMapperImpl: HomeViewModelMapper {
                                      image: UIImage(named: MockData.frameworks[index].imageName)!)
             }
         }
+        
+    }
+    
+    func mapCellData(from framework: Framework) -> CustomCollectionViewCell.Data {
+        
+        .init(title: framework.name,
+              description: framework.description,
+              image: UIImage(named: framework.imageName),
+              url: URL(string: framework.urlString))
         
     }
 }

@@ -68,6 +68,7 @@ class LoginViewController: UIViewController {
     @objc func pushHomeViewVC() {
         
         let frameworkRepository: FrameworkRepository = FrameworkRepositoryImpl.shared                               //ovo je dio koji se treba pojednostaviti pomoću Swinject?
+        
         let getFrameworksUseCase: GetFrameworksUseCase = GetFrameworksUseCaseImpl(repository: frameworkRepository)
         let frameworkMapper: HomeViewModelMapper = HomeViewModelMapperImpl()
         
