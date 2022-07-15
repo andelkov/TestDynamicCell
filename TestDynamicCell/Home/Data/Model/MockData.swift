@@ -5,16 +5,7 @@
 //  Created by Andjelko Vico on 12.07.2022..
 //
 
-import UIKit
-
-struct Framework: Hashable, Identifiable {
-    let id = UUID()
-    let name: String
-    let imageName: String
-    let urlString: String
-    let description: String
-}
-
+import Foundation
 
 struct MockData: Hashable {
     

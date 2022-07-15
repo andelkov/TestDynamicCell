@@ -34,7 +34,7 @@ class LoginViewController: UIViewController {
             button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
             button.heightAnchor.constraint(equalToConstant: 50)
-            ])
+        ])
     }
     
     private func configureUsernameTexfield() {
@@ -66,8 +66,15 @@ class LoginViewController: UIViewController {
     
     @objc func pushFollowerListVC() {
         
-        let homeViewController = HomeViewController()
-        navigationController?.pushViewController(homeViewController, animated: true)
+        //ovo je dio koji se treba pojednostaviti pomoću Swinject?
+//        let frameworkRepository: FrameworkRepository = FrameworkRepositoryImpl.shared
+//        let getFrameworksUseCase: GetFrameworksUseCase = GetFrameworksUseCaseImpl(repository: frameworkRepository)
+//        let frameworkMapper: HomeViewModelMapper = HomeViewModelMapperImpl()                                      //ne raditi instanciranje propetije, nego preko contructora
+//        
+//        
+//        let homeViewModel = HomeViewModelImpl(getFrameworksUseCase: getFrameworksUseCase, mapper: frameworkMapper)
+//        let homeViewController = HomeViewController(homeViewModel: homeViewModel)
+//        navigationController?.pushViewController(homeViewController, animated: true)
     }
     
 }
