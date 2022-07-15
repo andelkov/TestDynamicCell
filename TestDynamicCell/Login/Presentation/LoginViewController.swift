@@ -24,7 +24,7 @@ class LoginViewController: UIViewController {
     
     private func configureButton() {
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(pushFollowerListVC), for: .touchUpInside)
+        button.addTarget(self, action: #selector(pushHomeViewVC), for: .touchUpInside)
         button.setTitle("Login", for: .normal)
         button.layer.cornerRadius = 10
         button.backgroundColor = .blue
@@ -54,7 +54,7 @@ class LoginViewController: UIViewController {
         usernameTextField.backgroundColor             = .tertiarySystemBackground
         usernameTextField.autocorrectionType          = .no
         usernameTextField.returnKeyType               = .go
-        usernameTextField.placeholder                 = "Enter a username"
+        usernameTextField.placeholder                 = "Don't click here"
         usernameTextField.clearButtonMode             = .whileEditing
         
         NSLayoutConstraint.activate([
@@ -65,13 +65,11 @@ class LoginViewController: UIViewController {
         ])
     }
     
-    @objc func pushFollowerListVC() {
+    @objc func pushHomeViewVC() {
         
-        //ovo je dio koji se treba pojednostaviti pomoću Swinject?
-        let frameworkRepository: FrameworkRepository = FrameworkRepositoryImpl.shared
+        let frameworkRepository: FrameworkRepository = FrameworkRepositoryImpl.shared                               //ovo je dio koji se treba pojednostaviti pomoću Swinject?
         let getFrameworksUseCase: GetFrameworksUseCase = GetFrameworksUseCaseImpl(repository: frameworkRepository)
         let frameworkMapper: HomeViewModelMapper = HomeViewModelMapperImpl()
-        
         
         let homeViewModel = HomeViewModelImpl(getFrameworksUseCase: getFrameworksUseCase, mapper: frameworkMapper)
         let homeViewController = HomeViewController(homeViewModel: homeViewModel)

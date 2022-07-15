@@ -20,6 +20,7 @@ final class FrameworkServiceImpl: FrameworkService {
 }
 
 // valja li ovaj pristup putem Singletona
+// recimo da je, jel ovaj File pravilno mjesto za stavit extenziju
 extension FrameworkServiceImpl {
     static let shared: FrameworkService = FrameworkServiceImpl()
 }
