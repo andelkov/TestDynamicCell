@@ -10,6 +10,7 @@ import UIKit
 protocol HomeViewModel {
     var dataCount: Int {get}
     
+    func returnImageDescription(index: Int) -> String
     func returnImageAsset(index: Int) -> UIImage
     func returnImageName(index: Int) -> String
     func returnAssetUrl(index: Int) -> URL
@@ -18,12 +19,12 @@ protocol HomeViewModel {
 
 class HomeViewModelImpl: HomeViewModel {
     
-    typealias HomeViewData = NSDiffableDataSourceSnapshot<Section, OrganizedData>
+    typealias HomeViewData = NSDiffableDataSourceSnapshot<Section, OrganizedData>             // di ovo stavit i da ne bude errora
     
     var dataCount: Int {MockData.frameworks.count}
-    
+    private lazy var frameworks : [Framework] = FrameworkServiceImpl.shared.getFrameworks()  //jel dobro ovako spremiti u sve u jednu varijablu pa da onda FrameworkService mora samo jednom                                                                                           posao napraviti
     private let getFrameworksUseCase: GetFrameworksUseCase
-    private let mapper: HomeViewModelMapper                                        //ne raditi instanciranje propetije, nego preko contructora
+    private let mapper: HomeViewModelMapper                                                  //INFO: ne raditi instanciranje propetije, nego preko contructora
     
     public init(getFrameworksUseCase: GetFrameworksUseCase,
          mapper: HomeViewModelMapper) {
@@ -32,32 +33,47 @@ class HomeViewModelImpl: HomeViewModel {
         self.mapper = mapper
     }
     
+    func returnImageDescription(index: Int) -> String {
+        
+        if index < self.frameworks.count {
+            
+            let description = self.frameworks[index].description
+            
+            return description
+            
+        } else {
+            
+            return self.frameworks[0].description
+            
+        }
+    }
+    
     func returnImageAsset(index: Int) -> UIImage {
         
-        if index < MockData.frameworks.count {
+        if index < self.frameworks.count {
             
-            let image = UIImage(named: MockData.frameworks[index].imageName)
+            let image = UIImage(named: self.frameworks[index].imageName)
             
             return image!
             
         } else {
             
-            return UIImage(named: MockData.frameworks[0].imageName)!
+            return UIImage(named: self.frameworks[index].imageName)!
             
         }
     }
     
     func returnImageName(index: Int) -> String {
         
-        if index < MockData.frameworks.count {
+        if index < self.frameworks.count {
             
-            let imageName = MockData.frameworks[index].name
+            let imageName = self.frameworks[index].name
             
             return imageName
             
         }
         else {
-            return MockData.frameworks[0].name
+            return self.frameworks[index].name
         }
     }
     
@@ -65,8 +81,8 @@ class HomeViewModelImpl: HomeViewModel {
         
         let returnUrl: URL
         
-        if index < MockData.frameworks.count {
-            guard let url = URL(string: MockData.frameworks[index].urlString) else { return MockData.safeUrl! }
+        if index < frameworks.count {
+            guard let url = URL(string: self.frameworks[index].urlString) else { return MockData.safeUrl! }  //jel ovdje kršim neko pravilo Designa time što pristup MockData.safeURL
             returnUrl = url
             
         } else { returnUrl = MockData.safeUrl!}

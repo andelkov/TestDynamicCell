@@ -19,7 +19,7 @@ final class FrameworkServiceImpl: FrameworkService {
     
 }
 
-// gdje ovo ide. valja li ovaj pristup
+// valja li ovaj pristup putem Singletona
 extension FrameworkServiceImpl {
     static let shared: FrameworkService = FrameworkServiceImpl()
 }

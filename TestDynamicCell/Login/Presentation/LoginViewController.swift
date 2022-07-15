@@ -58,6 +58,7 @@ class LoginViewController: UIViewController {
         usernameTextField.clearButtonMode             = .whileEditing
         
         NSLayoutConstraint.activate([
+            usernameTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 30),
             usernameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             usernameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
             usernameTextField.heightAnchor.constraint(equalToConstant: 50)
@@ -67,14 +68,14 @@ class LoginViewController: UIViewController {
     @objc func pushFollowerListVC() {
         
         //ovo je dio koji se treba pojednostaviti pomoću Swinject?
-//        let frameworkRepository: FrameworkRepository = FrameworkRepositoryImpl.shared
-//        let getFrameworksUseCase: GetFrameworksUseCase = GetFrameworksUseCaseImpl(repository: frameworkRepository)
-//        let frameworkMapper: HomeViewModelMapper = HomeViewModelMapperImpl()                                      //ne raditi instanciranje propetije, nego preko contructora
-//        
-//        
-//        let homeViewModel = HomeViewModelImpl(getFrameworksUseCase: getFrameworksUseCase, mapper: frameworkMapper)
-//        let homeViewController = HomeViewController(homeViewModel: homeViewModel)
-//        navigationController?.pushViewController(homeViewController, animated: true)
+        let frameworkRepository: FrameworkRepository = FrameworkRepositoryImpl.shared
+        let getFrameworksUseCase: GetFrameworksUseCase = GetFrameworksUseCaseImpl(repository: frameworkRepository)
+        let frameworkMapper: HomeViewModelMapper = HomeViewModelMapperImpl()
+        
+        
+        let homeViewModel = HomeViewModelImpl(getFrameworksUseCase: getFrameworksUseCase, mapper: frameworkMapper)
+        let homeViewController = HomeViewController(homeViewModel: homeViewModel)
+        navigationController?.pushViewController(homeViewController, animated: true)
     }
     
 }
