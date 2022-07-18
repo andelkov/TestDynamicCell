@@ -16,7 +16,7 @@ final class HomeViewController: UIViewController  {
     private lazy var collectionView: UICollectionView = {
         
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.backgroundColor = .secondarySystemBackground
+        collectionView.backgroundColor = .systemBackground
         collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         collectionView.contentInsetAdjustmentBehavior = .always
         
@@ -103,7 +103,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
             let sectionInset = (collectionViewLayout as! UICollectionViewFlowLayout).sectionInset
-            let referenceHeight: CGFloat = 100 // Approximate height of your cell
+            let referenceHeight: CGFloat = 100 
             let referenceWidth = collectionView.safeAreaLayoutGuide.layoutFrame.width
                 - sectionInset.left
                 - sectionInset.right

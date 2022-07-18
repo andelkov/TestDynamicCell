@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class CustomCollectionViewCell: UICollectionViewCell {
     
@@ -37,7 +38,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         
         label.numberOfLines = 0
-        label.textAlignment = .left
+        label.textAlignment = .justified
         label.textColor = .label
         return label
     }()
@@ -63,18 +64,18 @@ final class CustomCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupLayouts() {
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         name.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        contentView.backgroundColor = .systemBackground
+        contentView.backgroundColor = .tertiarySystemGroupedBackground
+        
+        imageView.snp.makeConstraints { make in
+            make.width.height.equalTo(50)
+        }
         
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            
-            imageView.heightAnchor.constraint(equalToConstant: Constants.imageHeight),
-            imageView.widthAnchor.constraint(equalToConstant: Constants.imageHeight)
         ])
         
         NSLayoutConstraint.activate([
