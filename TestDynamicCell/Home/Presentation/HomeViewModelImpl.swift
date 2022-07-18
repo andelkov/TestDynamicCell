@@ -8,18 +8,15 @@
 import UIKit
 
 protocol HomeViewModel {
-    var dataCount: Int {get}
-    
     func loadData()
     func getCellData(index: Int) -> CustomCollectionViewCell.Data?
     func getInitialData() -> NSDiffableDataSourceSnapshot<Section, OrganizedData>
 }
 
 class HomeViewModelImpl: HomeViewModel {
-  
-    var dataCount: Int {frameworks.count}
+    
     private let getFrameworksUseCase: GetFrameworksUseCase
-    private var frameworks : [Framework] = []
+    var frameworks : [Framework] = []
     private let mapper: HomeViewModelMapper
     
     public init(getFrameworksUseCase: GetFrameworksUseCase,

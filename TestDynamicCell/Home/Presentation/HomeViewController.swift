@@ -9,7 +9,7 @@ import UIKit
 
 final class HomeViewController: UIViewController  {
     
-    private var homeViewModel: HomeViewModel
+    private var homeViewModel: HomeViewModelImpl                                                                      // tu ide HomeViewModelIMpl ili samo HomeViewModel?
     private lazy var datasource: UICollectionViewDiffableDataSource<Section, OrganizedData> = configureDataSource()
     
     //MARK: View definition
@@ -25,7 +25,7 @@ final class HomeViewController: UIViewController  {
         return collectionView
     }()
     
-    public init(homeViewModel: HomeViewModel) {
+    public init(homeViewModel: HomeViewModelImpl) {
         self.homeViewModel = homeViewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -49,9 +49,9 @@ final class HomeViewController: UIViewController  {
             
             var content = cell.defaultContentConfiguration() //snapkit ovdje sve
             
-            content.text = self.homeViewModel.getCellData(index: IndexPath.row)
-            content.secondaryText = self.homeViewModel.returnImageDescription(index: indexPath.row)
-            content.image = self.homeViewModel.returnImageAsset(index: indexPath.row)
+            content.text = self.homeViewModel.frameworks[indexPath.row].name
+            content.secondaryText = self.homeViewModel.frameworks[indexPath.row].description
+            content.image = UIImage(named: self.homeViewModel.frameworks[indexPath.row].imageName)
             
             content.textProperties.color = .systemBlue
             content.imageProperties.maximumSize.width = self.view.bounds.width/3
@@ -90,11 +90,14 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return homeViewModel.dataCount
+        return self.homeViewModel.frameworks.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presentSafariVC(with: homeViewModel.returnAssetUrl(index: indexPath.row))
+        
+        let url = URL(string: self.homeViewModel.frameworks[indexPath.row].urlString) ?? URL(string: "https://developer.apple.com")!
+        
+        presentSafariVC(with: url)
         collectionView.deselectItem(at: indexPath, animated: true)
     }
 
