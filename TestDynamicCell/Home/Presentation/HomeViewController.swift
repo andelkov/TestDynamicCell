@@ -15,12 +15,18 @@ final class HomeViewController: UIViewController  {
     //MARK: View definition
     private lazy var collectionView: UICollectionView = {
         
-        let config = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
-        let collectionViewLayout = UICollectionViewCompositionalLayout.list(using: config)
+        let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.backgroundColor = .secondarySystemBackground
+        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
-        let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: collectionViewLayout )
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        let layout = collectionView.collectionViewLayout
+        if let flowLayout = layout as? UICollectionViewFlowLayout {
+            flowLayout.itemSize = CGSize(width: self.view.bounds.width-20, height: 150)
+        }
+        
+        collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
         
         return collectionView
     }()
@@ -41,26 +47,17 @@ final class HomeViewController: UIViewController  {
         configureViewController()
         self.homeViewModel.loadData()
         view.addSubview(collectionView)
-        applyInitialData()
+        //applyInitialData()
     }
     
     private func configureDataSource() -> UICollectionViewDiffableDataSource<Section, OrganizedData> {
-        let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, OrganizedData> { [self] (cell, indexPath, organizedData) in
+        
+        let cellRegistration = UICollectionView.CellRegistration<CustomCollectionViewCell, OrganizedData> { [self] (cell, indexPath, organizedData) in
             
-            var content = cell.defaultContentConfiguration() //snapkit ovdje sve
-            
-            content.text = self.homeViewModel.frameworks[indexPath.row].name
-            content.secondaryText = self.homeViewModel.frameworks[indexPath.row].description
-            content.image = UIImage(named: self.homeViewModel.frameworks[indexPath.row].imageName)
-            
-            content.textProperties.color = .systemBlue
-            content.imageProperties.maximumSize.width = self.view.bounds.width/3
-            
-            cell.contentConfiguration = content
+            cell.setup(with: self.homeViewModel.frameworks[indexPath.row])
         }
         
-        return UICollectionViewDiffableDataSource<Section, OrganizedData> (collectionView: collectionView,
-                                                                           cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
+        return UICollectionViewDiffableDataSource<Section, OrganizedData> (collectionView: collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
             
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
         })
@@ -68,12 +65,11 @@ final class HomeViewController: UIViewController  {
     
     private func applyInitialData() {
         
-        
-        datasource.apply(homeViewModel.getInitialData(), animatingDifferences: false)
+        datasource.apply(homeViewModel.getInitialData(), animatingDifferences: true)
     }
     
     private func configureViewController() {
-        view.backgroundColor    = .systemBackground
+        view.backgroundColor    = .secondarySystemBackground
         title                   = "Lorem Ipsum"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
@@ -81,10 +77,11 @@ final class HomeViewController: UIViewController  {
 }
 
 //MARK: Extensions
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCollectionViewCell", for: indexPath) as! CustomCollectionViewCell
+        cell.setup(with: homeViewModel.frameworks[indexPath.row])
         
         return cell
     }
@@ -100,5 +97,5 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         presentSafariVC(with: url)
         collectionView.deselectItem(at: indexPath, animated: true)
     }
-
+    
 }

@@ -41,9 +41,8 @@ class HomeViewModelImpl: HomeViewModel {
     func getInitialData() -> HomeViewData {
         
         var snapshot = HomeViewData() //maket u ViewModel
-        snapshot.appendSections([Section.main, Section.second])
+        snapshot.appendSections([Section.main])
         snapshot.appendItems(mapper.returnSectionItems(section: Section.main), toSection: Section.main)
-        snapshot.appendItems(mapper.returnSectionItems(section: Section.second), toSection: Section.second)
         
         return snapshot //datasource.apply(snapshot, animatingDifferences: false)
     }

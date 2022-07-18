@@ -9,7 +9,6 @@ import UIKit
 
 enum Section {
     case main
-    case second
 }
 
 struct OrganizedData: Hashable {
