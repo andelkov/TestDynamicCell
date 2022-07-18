@@ -33,12 +33,12 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    let descriptionLabel: UITextView = {
-        let label = UITextView()
+    let descriptionLabel: UILabel = {
+        let label = UILabel()
+        
+        label.numberOfLines = 0
         label.textAlignment = .left
         label.textColor = .label
-        label.isScrollEnabled = false
-        label.textContainer.lineBreakMode = .byWordWrapping
         return label
     }()
     
@@ -46,6 +46,10 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         setupViews()
         setupLayouts()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func setupViews() {
@@ -72,23 +76,19 @@ final class CustomCollectionViewCell: UICollectionViewCell {
             imageView.heightAnchor.constraint(equalToConstant: Constants.imageHeight),
             imageView.widthAnchor.constraint(equalToConstant: Constants.imageHeight)
         ])
-
+        
         NSLayoutConstraint.activate([
             name.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 10),
             name.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             name.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
         ])
-
+        
         NSLayoutConstraint.activate([
             descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),//
             descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            descriptionLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 4.0),
-            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4.0)
+            descriptionLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
+            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
         ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     func setup(with framework: Framework) {
@@ -96,10 +96,12 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         name.text = framework.name
         descriptionLabel.text = framework.description
     }
-    
 }
 
 extension CustomCollectionViewCell: Configurable {
+    
+    func configure(with data: Data) {
+    }
     
     struct Data {
         let title: String
@@ -108,10 +110,11 @@ extension CustomCollectionViewCell: Configurable {
         let url: URL?
     }
     
-    func configure(with data: Data) {
-        // imageTitle = data.imageTitle
-        // imageDescription
-    }
     
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        descriptionLabel.preferredMaxLayoutWidth = layoutAttributes.size.width - contentView.layoutMargins.left - contentView.layoutMargins.left
+        layoutAttributes.bounds.size.height = systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        return layoutAttributes
+    }
     
 }

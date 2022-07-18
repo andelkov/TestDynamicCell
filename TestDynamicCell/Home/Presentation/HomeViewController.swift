@@ -18,6 +18,7 @@ final class HomeViewController: UIViewController  {
         let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.backgroundColor = .secondarySystemBackground
         collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        collectionView.contentInsetAdjustmentBehavior = .always
         
         let layout = collectionView.collectionViewLayout
         if let flowLayout = layout as? UICollectionViewFlowLayout {
@@ -27,6 +28,8 @@ final class HomeViewController: UIViewController  {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
+        (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).sectionInsetReference = .fromLayoutMargins
         
         return collectionView
     }()
@@ -97,5 +100,16 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         presentSafariVC(with: url)
         collectionView.deselectItem(at: indexPath, animated: true)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            let sectionInset = (collectionViewLayout as! UICollectionViewFlowLayout).sectionInset
+            let referenceHeight: CGFloat = 100 // Approximate height of your cell
+            let referenceWidth = collectionView.safeAreaLayoutGuide.layoutFrame.width
+                - sectionInset.left
+                - sectionInset.right
+                - collectionView.contentInset.left
+                - collectionView.contentInset.right
+            return CGSize(width: referenceWidth, height: referenceHeight)
+        }
     
 }
