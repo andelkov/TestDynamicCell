@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class LoginViewController: UIViewController {
     
@@ -23,18 +24,16 @@ class LoginViewController: UIViewController {
     }
     
     private func configureButton() {
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(pushHomeViewVC), for: .touchUpInside)
         button.setTitle("Login", for: .normal)
         button.layer.cornerRadius = 10
         button.backgroundColor = .blue
         
-        NSLayoutConstraint.activate([
-            button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
-            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            button.heightAnchor.constraint(equalToConstant: 50)
-        ])
+        button.snp.makeConstraints { make in
+            make.bottom.right.equalTo(view).offset(-50)
+            make.left.equalTo(view.snp.left).offset(50)
+            make.height.equalTo(50)
+        }
     }
     
     private func configureUsernameTexfield() {
@@ -57,12 +56,12 @@ class LoginViewController: UIViewController {
         usernameTextField.placeholder                 = "Don't click here"
         usernameTextField.clearButtonMode             = .whileEditing
         
-        NSLayoutConstraint.activate([
-            usernameTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 30),
-            usernameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            usernameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            usernameTextField.heightAnchor.constraint(equalToConstant: 50)
-        ])
+        usernameTextField.snp.makeConstraints { make in
+            make.centerY.equalTo(view.snp.centerY).offset(30)
+            make.left.equalTo(view.snp.left).offset(50)
+            make.right.equalTo(view.snp.right).offset(-50)
+            make.height.equalTo(50)
+        }
     }
     
     @objc func pushHomeViewVC() {

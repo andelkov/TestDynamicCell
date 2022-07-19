@@ -12,12 +12,10 @@ final class CustomCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "CustomCollectionViewCell"
     
-    private enum Constants {
-        // MARK: contentView layout constants
+    private enum Constants {                                                //gdje ovo ostaviti
         static let contentViewCornerRadius: CGFloat = 10
-        
-        // MARK: profileImageView layout constants
-        static let imageHeight: CGFloat = 40
+        static let imageHeight: CGFloat = 50
+        static let padding: CGFloat = 10
     }
     
     private let imageView: UIImageView = {
@@ -31,6 +29,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .left
         label.textColor = .systemBlue
         label.numberOfLines = 0
+        label.font = UIFont.boldSystemFont(ofSize: 16.0)
         return label
     }()
     
@@ -64,32 +63,26 @@ final class CustomCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupLayouts() {
-        name.translatesAutoresizingMaskIntoConstraints = false
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         
         contentView.backgroundColor = .tertiarySystemGroupedBackground
         
         imageView.snp.makeConstraints { make in
-            make.width.height.equalTo(50)
+            make.width.height.equalTo(Constants.imageHeight)
+            make.left.equalTo(contentView.snp.left).offset(Constants.padding)
+            make.top.equalTo(contentView.snp.top).offset(Constants.padding)
         }
         
-        NSLayoutConstraint.activate([
-            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-        ])
+        name.snp.makeConstraints { make in
+            make.left.equalTo(imageView.snp_rightMargin).offset(1.5*Constants.padding)
+            make.centerY.equalTo(imageView.snp.centerY)
+        }
         
-        NSLayoutConstraint.activate([
-            name.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 10),
-            name.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            name.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
-            descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),//
-            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            descriptionLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
-            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
-        ])
+        descriptionLabel.snp.makeConstraints { make in
+            make.left.equalTo(contentView).offset(Constants.padding)
+            make.right.bottom.equalTo(contentView).offset(-Constants.padding)
+            make.top.equalTo(imageView.snp_bottomMargin).offset(1.5*Constants.padding)
+        }
+
     }
     
     func setup(with framework: Framework) {
