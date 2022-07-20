@@ -73,7 +73,7 @@ final class HomeViewController: UIViewController  {
     
     private func configureViewController() {
         view.backgroundColor    = .secondarySystemBackground
-        title                   = "Lorem Ipsum"
+        title                   = self.homeViewModel.navigationBarTitle
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     

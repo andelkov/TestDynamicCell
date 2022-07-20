@@ -15,15 +15,23 @@ import UIKit
 
 class HomeViewModel {
     
+    var navigationBarTitle: String
     private let getFrameworksUseCase: GetFrameworksUseCase
     var frameworks : [Framework] = []
     private let mapper: HomeViewModelMapper
     
-    public init(getFrameworksUseCase: GetFrameworksUseCase,
+    convenience init(getFrameworksUseCase: GetFrameworksUseCase,
                 mapper: HomeViewModelMapper) {
+        self.init(getFrameworksUseCase: getFrameworksUseCase,
+                  mapper: mapper, title: "")
+    }
+    
+    public init(getFrameworksUseCase: GetFrameworksUseCase,
+                mapper: HomeViewModelMapper, title: String) {
         
         self.getFrameworksUseCase = getFrameworksUseCase
         self.mapper = mapper
+        self.navigationBarTitle = title
     }
     
     func loadData() {

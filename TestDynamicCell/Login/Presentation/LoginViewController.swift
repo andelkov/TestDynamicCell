@@ -73,8 +73,9 @@ class LoginViewController: UIViewController {
 //        let homeViewModel = HomeViewModelImpl(getFrameworksUseCase: getFrameworksUseCase, mapper: frameworkMapper)
         
         let homeViewModel = InstanceContainer.instance.resolve(HomeViewModel.self)!
-        let homeViewController = HomeViewController(homeViewModel: homeViewModel)
+        homeViewModel.navigationBarTitle = ((self.usernameTextField.text == "") ? "Lorem Ipsum" : self.usernameTextField.text)!
         
+        let homeViewController = HomeViewController(homeViewModel: homeViewModel)
         navigationController?.pushViewController(homeViewController, animated: true)
     }
     
