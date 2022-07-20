@@ -37,7 +37,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         
         label.numberOfLines = 0
-        label.textAlignment = .justified
+        label.textAlignment = .natural
         label.textColor = .label
         return label
     }()
