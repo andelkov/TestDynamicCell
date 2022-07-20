@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		12EBD40EC0FB00827A85D110 /* Pods_TestDynamicCell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F55419826851485CEEEFF6F /* Pods_TestDynamicCell.framework */; };
+		896B6A822887FEF800F35B61 /* Swinject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896B6A812887FEF800F35B61 /* Swinject.swift */; };
 		89BE8B32287C5C5800957B99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE8B31287C5C5800957B99 /* AppDelegate.swift */; };
 		89BE8B34287C5C5800957B99 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE8B33287C5C5800957B99 /* SceneDelegate.swift */; };
 		89BE8B36287C5C5800957B99 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE8B35287C5C5800957B99 /* HomeViewController.swift */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		321ECCDA7C1B568D87F2CED6 /* Pods-TestDynamicCell.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDynamicCell.release.xcconfig"; path = "Target Support Files/Pods-TestDynamicCell/Pods-TestDynamicCell.release.xcconfig"; sourceTree = "<group>"; };
+		896B6A812887FEF800F35B61 /* Swinject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swinject.swift; sourceTree = "<group>"; };
 		89BE8B2E287C5C5800957B99 /* TestDynamicCell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDynamicCell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89BE8B31287C5C5800957B99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		89BE8B33287C5C5800957B99 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +70,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		896B6A802887FEEE00F35B61 /* Swinject */ = {
+			isa = PBXGroup;
+			children = (
+				896B6A812887FEF800F35B61 /* Swinject.swift */,
+			);
+			path = Swinject;
+			sourceTree = "<group>";
+		};
 		89BE8B25287C5C5800957B99 = {
 			isa = PBXGroup;
 			children = (
@@ -203,6 +213,7 @@
 		89BE8B6328801A2C00957B99 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				896B6A802887FEEE00F35B61 /* Swinject */,
 				89DD67782881A215007FC491 /* Protocol */,
 				89BE8B55287EF29D00957B99 /* Extensions */,
 			);
@@ -408,6 +419,7 @@
 				89BE8B6728801BC100957B99 /* HomeViewModelMapper.swift in Sources */,
 				89BE8B48287DA2B600957B99 /* MockData.swift in Sources */,
 				89BE8B4C287E9F3D00957B99 /* CustomCollectionViewCell.swift in Sources */,
+				896B6A822887FEF800F35B61 /* Swinject.swift in Sources */,
 				89BE8B32287C5C5800957B99 /* AppDelegate.swift in Sources */,
 				89BE8B6A28801DA800957B99 /* HomeViewData.swift in Sources */,
 				89BE8B57287EF2B600957B99 /* UIViewController+Ext.swift in Sources */,

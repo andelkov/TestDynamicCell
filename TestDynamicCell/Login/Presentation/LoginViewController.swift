@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Swinject
 
 class LoginViewController: UIViewController {
     
@@ -66,13 +67,14 @@ class LoginViewController: UIViewController {
     
     @objc func pushHomeViewVC() {
         
-        let frameworkRepository: FrameworkRepository = FrameworkRepositoryImpl.shared                               //ovo je dio koji se treba pojednostaviti pomoću Swinject?
+//        let frameworkRepository: FrameworkRepository = FrameworkRepositoryImpl.shared
+//        let getFrameworksUseCase: GetFrameworksUseCase = GetFrameworksUseCaseImpl(repository: frameworkRepository)
+//        let frameworkMapper: HomeViewModelMapper = HomeViewModelMapperImpl()
+//        let homeViewModel = HomeViewModelImpl(getFrameworksUseCase: getFrameworksUseCase, mapper: frameworkMapper)
         
-        let getFrameworksUseCase: GetFrameworksUseCase = GetFrameworksUseCaseImpl(repository: frameworkRepository)
-        let frameworkMapper: HomeViewModelMapper = HomeViewModelMapperImpl()
-        
-        let homeViewModel = HomeViewModelImpl(getFrameworksUseCase: getFrameworksUseCase, mapper: frameworkMapper)
+        let homeViewModel = InstanceContainer.instance.resolve(HomeViewModel.self)!
         let homeViewController = HomeViewController(homeViewModel: homeViewModel)
+        
         navigationController?.pushViewController(homeViewController, animated: true)
     }
     

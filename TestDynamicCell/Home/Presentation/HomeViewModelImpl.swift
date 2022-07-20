@@ -6,14 +6,14 @@
 //
 
 import UIKit
+//
+//protocol HomeViewModel {
+//    func loadData()
+//    func getCellData(index: Int) -> CustomCollectionViewCell.Data?
+//    func getInitialData() -> NSDiffableDataSourceSnapshot<Section, OrganizedData>
+//}
 
-protocol HomeViewModel {
-    func loadData()
-    func getCellData(index: Int) -> CustomCollectionViewCell.Data?
-    func getInitialData() -> NSDiffableDataSourceSnapshot<Section, OrganizedData>
-}
-
-class HomeViewModelImpl: HomeViewModel {
+class HomeViewModel {
     
     private let getFrameworksUseCase: GetFrameworksUseCase
     var frameworks : [Framework] = []

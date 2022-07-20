@@ -9,7 +9,7 @@ import UIKit
 
 final class HomeViewController: UIViewController  {
     
-    private var homeViewModel: HomeViewModelImpl                                                                      // tu ide HomeViewModelIMpl ili samo HomeViewModel?
+    private var homeViewModel: HomeViewModel                                                                     // tu ide HomeViewModelIMpl ili samo HomeViewModel?
     private lazy var datasource: UICollectionViewDiffableDataSource<Section, OrganizedData> = configureDataSource()
     
     //MARK: View definition
@@ -34,7 +34,7 @@ final class HomeViewController: UIViewController  {
         return collectionView
     }()
     
-    public init(homeViewModel: HomeViewModelImpl) {
+    public init(homeViewModel: HomeViewModel) {
         self.homeViewModel = homeViewModel
         super.init(nibName: nil, bundle: nil)
     }
