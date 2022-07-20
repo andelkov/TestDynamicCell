@@ -20,7 +20,7 @@ class HomeViewModel {
     private let mapper: HomeViewModelMapper
     
     public init(getFrameworksUseCase: GetFrameworksUseCase,
-         mapper: HomeViewModelMapper) {
+                mapper: HomeViewModelMapper) {
         
         self.getFrameworksUseCase = getFrameworksUseCase
         self.mapper = mapper
@@ -44,7 +44,7 @@ class HomeViewModel {
         snapshot.appendSections([Section.main])
         snapshot.appendItems(mapper.returnSectionItems(section: Section.main), toSection: Section.main)
         
-        return snapshot //datasource.apply(snapshot, animatingDifferences: false)
+        return snapshot                         //datasource.apply(snapshot, animatingDifferences: false)
     }
     
 }

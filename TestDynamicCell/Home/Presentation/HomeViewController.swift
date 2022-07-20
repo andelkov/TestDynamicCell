@@ -95,9 +95,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let url = URL(string: self.homeViewModel.frameworks[indexPath.row].urlString) ?? URL(string: "https://developer.apple.com")!
+        let detailsViewController = DetailsViewController(framework: self.homeViewModel.frameworks[indexPath.row])
         
-        presentSafariVC(with: url)
+        self.present(detailsViewController, animated: true)
+        
+        //presentSafariVC(with: url)
         collectionView.deselectItem(at: indexPath, animated: true)
     }
     

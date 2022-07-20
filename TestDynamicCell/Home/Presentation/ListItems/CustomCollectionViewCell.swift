@@ -24,7 +24,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    let name: UILabel = {
+    private let name: UILabel = {
         let label = UILabel(frame: .zero)
         label.textAlignment = .left
         label.textColor = .systemBlue
@@ -33,7 +33,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    let descriptionLabel: UILabel = {
+    private let descriptionLabel: UILabel = {
         let label = UILabel()
         
         label.numberOfLines = 0
@@ -55,7 +55,6 @@ final class CustomCollectionViewCell: UICollectionViewCell {
     private func setupViews() {
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = Constants.contentViewCornerRadius
-        contentView.backgroundColor = .white
         
         contentView.addSubview(imageView)
         contentView.addSubview(name)

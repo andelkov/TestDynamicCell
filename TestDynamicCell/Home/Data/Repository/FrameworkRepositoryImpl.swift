@@ -20,10 +20,3 @@ final class FrameworkRepositoryImpl: FrameworkRepository {
     }
 
 }
-
-
-//swinject
-extension FrameworkRepositoryImpl {
-    static let shared: FrameworkRepositoryImpl = FrameworkRepositoryImpl(service: FrameworkServiceImpl.shared)
-}
-
