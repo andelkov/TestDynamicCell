@@ -10,7 +10,10 @@ import SnapKit
 
 //tu ide Protocol?
 
-class DetailsViewController: UIViewController {
+class DetailsViewController: MVVMViewController<DetailsViewModel> {
+    
+    //MARK: properties
+    var framework: Framework!
     
     private let imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -35,28 +38,21 @@ class DetailsViewController: UIViewController {
         return label
     }()
     
-    public init(framework: Framework) {
-        self.imageView.image = UIImage(named: framework.imageName)!
-        self.name.text = framework.name
-        self.descriptionLabel.text = framework.description
-        
-        super.init(nibName: nil, bundle: nil)
+ 
+    override func bindInput() -> DetailsViewModel.Input {
+        return DetailsViewModel.Input()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func bindOutput(output: DetailsViewModel.Output) {
         
-        setupViewController()
+    }
+    
+    override func setupView() {
+        
+        self.view.backgroundColor = .systemBackground
         setupLayout()
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupViewController() {
-        self.view.backgroundColor = .systemBackground
-    }
+   
     
     private func setupLayout() {
         view.addSubview(imageView)
@@ -82,7 +78,5 @@ class DetailsViewController: UIViewController {
             make.bottom.equalTo(view)
         }
     }
-        
-    
     
 }

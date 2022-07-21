@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class HomeViewController: UIViewController  {
+final class HomeViewController: MVVMViewController<HomeViewModel> {
     
-    private var homeViewModel: HomeViewModel                                                                     // tu ide HomeViewModelIMpl ili samo HomeViewModel?
+    //private var homeViewModel: HomeViewModel                                                                     // tu ide HomeViewModelIMpl ili samo HomeViewModel?
     private lazy var datasource: UICollectionViewDiffableDataSource<Section, OrganizedData> = configureDataSource()
     
     //MARK: View definition
@@ -33,31 +33,30 @@ final class HomeViewController: UIViewController  {
         
         return collectionView
     }()
-    
-    public init(homeViewModel: HomeViewModel) {
-        self.homeViewModel = homeViewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
         configureViewController()
-        self.homeViewModel.loadData()
         view.addSubview(collectionView)
         //applyInitialData()
+    }
+    
+    override func bindInput() -> HomeViewModel.Input {
+        return HomeViewModel.Input()
+    }
+    
+    override func bindOutput(output: HomeViewModel.Output) {
+        
     }
     
     private func configureDataSource() -> UICollectionViewDiffableDataSource<Section, OrganizedData> {
         
         let cellRegistration = UICollectionView.CellRegistration<CustomCollectionViewCell, OrganizedData> { [self] (cell, indexPath, organizedData) in
             
-            cell.setup(with: self.homeViewModel.frameworks[indexPath.row])
+            //cell.setup(with: self.homeViewModel.frameworks[indexPath.row])
         }
         
         return UICollectionViewDiffableDataSource<Section, OrganizedData> (collectionView: collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
@@ -68,12 +67,12 @@ final class HomeViewController: UIViewController  {
     
     private func applyInitialData() {
         
-        datasource.apply(homeViewModel.getInitialData(), animatingDifferences: true)
+       // datasource.apply(homeViewModel.getInitialData(), animatingDifferences: true)
     }
     
     private func configureViewController() {
         view.backgroundColor    = .secondarySystemBackground
-        title                   = self.homeViewModel.navigationBarTitle
+        //title                   = self.homeViewModel.navigationBarTitle
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
@@ -84,20 +83,20 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCollectionViewCell", for: indexPath) as! CustomCollectionViewCell
-        cell.setup(with: homeViewModel.frameworks[indexPath.row])
+        //cell.setup(with: homeViewModel.frameworks[indexPath.row])
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.homeViewModel.frameworks.count
+        return 10 //self.homeViewModel.frameworks.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let detailsViewController = DetailsViewController(framework: self.homeViewModel.frameworks[indexPath.row])
+        //let detailsViewController = DetailsViewController(framework: self.homeViewModel.frameworks[indexPath.row])
         
-        self.present(detailsViewController, animated: true)
+        //self.present(detailsViewController, animated: true)
         
         //presentSafariVC(with: url)
         collectionView.deselectItem(at: indexPath, animated: true)
