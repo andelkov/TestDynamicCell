@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class DetailsViewModel {
     
@@ -20,7 +21,6 @@ extension DetailsViewModel: ViewModelType {
     }
     
     struct Output {
-        
     }
     
     func transform(input: Input) -> Output {

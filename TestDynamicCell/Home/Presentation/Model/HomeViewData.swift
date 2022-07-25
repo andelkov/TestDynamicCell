@@ -7,7 +7,7 @@
 
 import UIKit
 
-typealias HomeViewData = NSDiffableDataSourceSnapshot<Section, OrganizedData> // ovdje je bilo "()"  na kraju
-
-
-
+//typealias HomeViewData = NSDiffableDataSourceSnapshot<Section, OrganizedData> // ovdje je bilo "()"  na kraju
+//
+//
+//

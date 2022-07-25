@@ -10,21 +10,21 @@ import SnapKit
 
 final class CustomCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "CustomCollectionViewCell"
+    static let reuseIdentifier = "CustomCollectionViewCell"
     
-    private enum Constants {                                                //gdje ovo ostaviti
+    private enum Constants {                                                
         static let contentViewCornerRadius: CGFloat = 10
         static let imageHeight: CGFloat = 50
         static let padding: CGFloat = 10
     }
     
-    private let imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
-    private let name: UILabel = {
+    private lazy var name: UILabel = {
         let label = UILabel(frame: .zero)
         label.textAlignment = .left
         label.textColor = .systemBlue
@@ -33,8 +33,8 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let descriptionLabel: UILabel = {
-        let label = UILabel()
+    private lazy var descriptionLabel: UILabel = {
+        let label = UILabel()                                               // view = private layz var
         
         label.numberOfLines = 0
         label.textAlignment = .natural
@@ -67,40 +67,39 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         
         imageView.snp.makeConstraints { make in
             make.width.height.equalTo(Constants.imageHeight)
-            make.left.equalTo(contentView.snp.left).offset(Constants.padding)
-            make.top.equalTo(contentView.snp.top).offset(Constants.padding)
+            make.left.equalToSuperview().offset(Constants.padding)
+            make.top.equalToSuperview().offset(Constants.padding)
         }
         
         name.snp.makeConstraints { make in
-            make.left.equalTo(imageView.snp_rightMargin).offset(1.5*Constants.padding)
+            make.left.equalTo(imageView.snp.right).offset(Constants.padding)
             make.centerY.equalTo(imageView.snp.centerY)
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.left.equalTo(contentView).offset(Constants.padding)
-            make.right.bottom.equalTo(contentView).offset(-Constants.padding)
-            make.top.equalTo(imageView.snp_bottomMargin).offset(1.5*Constants.padding)
+            make.left.equalToSuperview().offset(Constants.padding)
+            make.right.bottom.equalToSuperview().offset(-Constants.padding)
+            make.top.equalTo(imageView.snp_bottomMargin).offset(1.5*Constants.padding) // medium padding tu
         }
 
     }
-    
-    func setup(with framework: Framework) {
-        imageView.image = UIImage(named: framework.imageName)
-        name.text = framework.name
-        descriptionLabel.text = framework.description
-    }
+   
 }
 
 extension CustomCollectionViewCell: Configurable {
     
-    func configure(with data: Data) {
-    }
     
     struct Data {
         let title: String
         let description: String
         let image: UIImage?
         let url: URL?
+    }
+    
+    func configure(with data: Data) {
+        imageView.image = data.image
+        name.text = data.title
+        descriptionLabel.text = data.description
     }
     
     

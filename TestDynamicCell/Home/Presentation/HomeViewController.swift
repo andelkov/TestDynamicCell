@@ -6,11 +6,16 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import RxDataSources
 
 final class HomeViewController: MVVMViewController<HomeViewModel> {
     
-    //private var homeViewModel: HomeViewModel                                                                     // tu ide HomeViewModelIMpl ili samo HomeViewModel?
-    private lazy var datasource: UICollectionViewDiffableDataSource<Section, OrganizedData> = configureDataSource()
+    //MARK: parameters
+    private var frameworks: [CustomCollectionViewCell.Data] = []
+    var navBarTitle: String?
+    private let disposeBag = DisposeBag()
     
     //MARK: View definition
     private lazy var collectionView: UICollectionView = {
@@ -24,24 +29,20 @@ final class HomeViewController: MVVMViewController<HomeViewModel> {
         if let flowLayout = layout as? UICollectionViewFlowLayout {
             flowLayout.itemSize = CGSize(width: self.view.bounds.width-20, height: 150)
         }
+    
+        collectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
         
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
+        collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.reuseIdentifier)
         (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).sectionInsetReference = .fromLayoutMargins
         
         return collectionView
     }()
-   
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
+    override func setupView() {
         configureViewController()
         view.addSubview(collectionView)
-        //applyInitialData()
     }
     
     override func bindInput() -> HomeViewModel.Input {
@@ -49,33 +50,23 @@ final class HomeViewController: MVVMViewController<HomeViewModel> {
     }
     
     override func bindOutput(output: HomeViewModel.Output) {
-        
-    }
-    
-    private func configureDataSource() -> UICollectionViewDiffableDataSource<Section, OrganizedData> {
-        
-        let cellRegistration = UICollectionView.CellRegistration<CustomCollectionViewCell, OrganizedData> { [self] (cell, indexPath, organizedData) in
-            
-            //cell.setup(with: self.homeViewModel.frameworks[indexPath.row])
+        output.loading.drive { _ in
+            //handle true/false, sakriti spinner
         }
+        output.frameworks
+            .drive(collectionView.rx.items(cellIdentifier: CustomCollectionViewCell.reuseIdentifier, cellType: CustomCollectionViewCell.self) ) { [weak self] (row, item, cell) in
+                cell.configure(with: item)
+                self?.frameworks.append(item)
+            }
+            .disposed(by: disposeBag)
         
-        return UICollectionViewDiffableDataSource<Section, OrganizedData> (collectionView: collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
-            
-            return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
-        })
-    }
-    
-    private func applyInitialData() {
-        
-       // datasource.apply(homeViewModel.getInitialData(), animatingDifferences: true)
     }
     
     private func configureViewController() {
         view.backgroundColor    = .secondarySystemBackground
-        //title                   = self.homeViewModel.navigationBarTitle
+        title                   = navBarTitle
         navigationController?.navigationBar.prefersLargeTitles = true
     }
-    
 }
 
 //MARK: Extensions
@@ -83,34 +74,48 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCollectionViewCell", for: indexPath) as! CustomCollectionViewCell
-        //cell.setup(with: homeViewModel.frameworks[indexPath.row])
-        
+     
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10 //self.homeViewModel.frameworks.count
+        return 10 //self.homeViewModel.frameworks.count                                                         //kako reaktivno izračunati koliko ima celija
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        //let detailsViewController = DetailsViewController(framework: self.homeViewModel.frameworks[indexPath.row])
+        guard let detailsViewController = Scene.details.viewController as? DetailsViewController else {return}
+        detailsViewController.framework = self.frameworks[indexPath.row]
+
         
-        //self.present(detailsViewController, animated: true)
+        self.present(detailsViewController, animated: true)
         
         //presentSafariVC(with: url)
         collectionView.deselectItem(at: indexPath, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let sectionInset = (collectionViewLayout as! UICollectionViewFlowLayout).sectionInset
-            let referenceHeight: CGFloat = 100 
-            let referenceWidth = collectionView.safeAreaLayoutGuide.layoutFrame.width
-                - sectionInset.left
-                - sectionInset.right
-                - collectionView.contentInset.left
-                - collectionView.contentInset.right
-            return CGSize(width: referenceWidth, height: referenceHeight)
-        }
+        let sectionInset = (collectionViewLayout as! UICollectionViewFlowLayout).sectionInset
+        let referenceHeight: CGFloat = 100
+        let referenceWidth = collectionView.safeAreaLayoutGuide.layoutFrame.width
+        - sectionInset.left
+        - sectionInset.right
+        - collectionView.contentInset.left
+        - collectionView.contentInset.right
+        return CGSize(width: referenceWidth, height: referenceHeight)
+    }
     
 }
+//
+//extension HomeViewController {
+//    typealias DataSource = RxCollectionViewSectionedReloadDataSource
+//
+//    static func dataSource() -> DataSource<SectionOfFrameworks> {
+//        .init { dataSource, collectionView, indexPath, element in
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.reuseIdentifier, for: indexPath) as! CustomCollectionViewCell
+//            cell.configure(with: element)
+//            return cell
+//        }
+//
+//    }
+//}

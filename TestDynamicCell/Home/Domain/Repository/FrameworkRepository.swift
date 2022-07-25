@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol FrameworkRepository {
-    func getFrameworks() -> [Framework]
+    func getFrameworks() -> Single<[Framework]>
 }
+

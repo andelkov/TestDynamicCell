@@ -9,7 +9,7 @@ import UIKit
 
 class MVVMViewController<ViewModel: ViewModelType>: UIViewController {
     
-    private let viewModel: ViewModel
+    let viewModel: ViewModel  // private let?
     
     required init(viewModel: ViewModel) {
         self.viewModel = viewModel
@@ -28,7 +28,6 @@ class MVVMViewController<ViewModel: ViewModelType>: UIViewController {
     }
     
     func setupView() {
-        
     }
     
     func bindInput() -> ViewModel.Input {

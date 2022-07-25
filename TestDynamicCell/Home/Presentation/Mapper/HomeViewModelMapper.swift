@@ -8,30 +8,22 @@
 import UIKit
 
 protocol HomeViewModelMapper {
-    func returnSectionItems (section: Section) -> [OrganizedData]
-    func mapCellData(from framework: Framework) -> CustomCollectionViewCell.Data
+    func mapCellData(from frameworks: [Framework]) -> [CustomCollectionViewCell.Data]
 }
 
 final class HomeViewModelMapperImpl: HomeViewModelMapper {
     
-    func returnSectionItems (section: Section) -> [OrganizedData] {
+    func mapCellData(from frameworks: [Framework]) -> [CustomCollectionViewCell.Data] {
         
-        return (1..<10).map { index -> OrganizedData in
-            return OrganizedData(title: MockData.frameworks[index].name ,
-                                 subtitle: MockData.frameworks[index].description,
-                                 image: UIImage(named: MockData.frameworks[index].imageName)!)
+        return frameworks.map { framework in
+            CustomCollectionViewCell.Data(title: framework.name,
+                                          description: framework.description,
+                                          image:  UIImage(named: framework.imageName),
+                                          url: URL(string: framework.urlString))
         }
         
     }
-    
-    func mapCellData(from framework: Framework) -> CustomCollectionViewCell.Data {
-        
-        .init(title: framework.name,
-              description: framework.description,
-              image: UIImage(named: framework.imageName),
-              url: URL(string: framework.urlString))
-        
-    }
+
 }
 
 

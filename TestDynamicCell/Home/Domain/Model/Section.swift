@@ -10,13 +10,3 @@ import UIKit
 enum Section {
     case main
 }
-
-struct OrganizedData: Hashable {
-    var title: String
-    var subtitle: String
-    var image: UIImage
-}
-
-
-
-

@@ -6,15 +6,20 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol FrameworkService {
-    func getFrameworks() -> [Framework]
+    func getFrameworks() -> Single<[Framework]>
 }
 
 final class FrameworkServiceImpl: FrameworkService {
     
-    func getFrameworks() -> [Framework] {
-        return MockData.frameworks
+    func getFrameworks() -> Single<[Framework]> {
+        return Single<[Framework]>.create { observer in
+            observer(.success(MockData.frameworks))
+            return Disposables.create()
+        }
+        .delay(.milliseconds(1000), scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
     }
     
 }

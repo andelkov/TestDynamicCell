@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol GetFrameworksUseCase {
-    func execute() -> [Framework]
+    func execute() -> Single<[Framework]>
 }
 
 final class GetFrameworksUseCaseImpl: GetFrameworksUseCase {
@@ -19,7 +20,7 @@ final class GetFrameworksUseCaseImpl: GetFrameworksUseCase {
         self.repository = repository
     }
     
-    func execute() -> [Framework] {
+    func execute() -> Single<[Framework]> {
         repository.getFrameworks()
     }
     

@@ -27,8 +27,8 @@ enum InstanceContainer {
             HomeViewModel(getFrameworksUseCase: $0.resolve(GetFrameworksUseCase.self)!, mapper: $0.resolve(HomeViewModelMapper.self)!)
         }
         
-        container.register(HomeViewModel.self) {
-            HomeViewModel(getFrameworksUseCase: $0.resolve(GetFrameworksUseCase.self)!, mapper: $0.resolve(HomeViewModelMapper.self)!, title: "HomeViewTitle.self as! HomeViewTitle")
+        container.register(DetailsViewModel.self) {_ in 
+            DetailsViewModel()
         }
         
         return container

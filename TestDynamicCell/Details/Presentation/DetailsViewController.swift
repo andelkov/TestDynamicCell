@@ -13,15 +13,15 @@ import SnapKit
 class DetailsViewController: MVVMViewController<DetailsViewModel> {
     
     //MARK: properties
-    var framework: Framework!
+    var framework: CustomCollectionViewCell.Data!                                                           //ovo smije biti tu po MVVM?
     
-    private let imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
-    let name: UILabel = {
+    private lazy var name: UILabel = {
         let label = UILabel(frame: .zero)
         label.textAlignment = .left
         label.textColor = .label
@@ -30,7 +30,7 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
         return label
     }()
     
-    let descriptionLabel: UITextView = {
+    private lazy var descriptionLabel: UITextView = {
         let label = UITextView()
         label.font = UIFont.systemFont(ofSize: 16)
         label.textAlignment = .natural
@@ -44,12 +44,18 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
     }
     
     override func bindOutput(output: DetailsViewModel.Output) {
+        //self.framework = output.frameworks
         
     }
     
     override func setupView() {
         
         self.view.backgroundColor = .systemBackground
+        print(framework)
+        self.imageView.image = framework.image
+        self.name.text = framework.title
+        self.descriptionLabel.text = framework.description
+        
         setupLayout()
     }
    

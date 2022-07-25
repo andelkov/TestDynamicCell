@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RxSwift
 
 final class FrameworkRepositoryImpl: FrameworkRepository {
     
@@ -15,7 +16,7 @@ final class FrameworkRepositoryImpl: FrameworkRepository {
         self.service = service
     }
     
-    func getFrameworks() -> [Framework] {
+    func getFrameworks() -> Single<[Framework]> {
         return service.getFrameworks()
     }
 

@@ -6,68 +6,50 @@
 //
 
 import UIKit
-//
-//protocol HomeViewModel {
-//    func loadData()
-//    func getCellData(index: Int) -> CustomCollectionViewCell.Data?
-//    func getInitialData() -> NSDiffableDataSourceSnapshot<Section, OrganizedData>
-//}
+import RxCocoa
+import RxSwift
+
 
 class HomeViewModel {
     
-    var navigationBarTitle: String
     private let getFrameworksUseCase: GetFrameworksUseCase
-    var frameworks : [Framework] = []
     private let mapper: HomeViewModelMapper
     
-    convenience init(getFrameworksUseCase: GetFrameworksUseCase,
-                mapper: HomeViewModelMapper) {
-        self.init(getFrameworksUseCase: getFrameworksUseCase,
-                  mapper: mapper, title: "")
-    }
-    
-    public init(getFrameworksUseCase: GetFrameworksUseCase,
-                mapper: HomeViewModelMapper, title: String) {
+    init(getFrameworksUseCase: GetFrameworksUseCase,
+         mapper: HomeViewModelMapper) {
         
         self.getFrameworksUseCase = getFrameworksUseCase
         self.mapper = mapper
-        self.navigationBarTitle = title
     }
     
-    func loadData() {
-        self.frameworks = getFrameworksUseCase.execute()
-    }
-    
-    func getCellData(index: Int) -> CustomCollectionViewCell.Data? {
-        guard index < self.frameworks.count else {
-            return nil
-        }
-        
-        return mapper.mapCellData(from: self.frameworks[index])
-    }
-    
-    func getInitialData() -> HomeViewData {
-        
-        var snapshot = HomeViewData() //maket u ViewModel
-        snapshot.appendSections([Section.main])
-        snapshot.appendItems(mapper.returnSectionItems(section: Section.main), toSection: Section.main)
-        
-        return snapshot                         //datasource.apply(snapshot, animatingDifferences: false)
-    }
     
 }
 
 extension HomeViewModel: ViewModelType {
     struct Input {
-        
+        //no inputs, dodati nešto kasnije, neki button npr
     }
     
     struct Output {
-        
+        let loading: Driver<Bool>
+        let frameworks: Driver<[CustomCollectionViewCell.Data]>
     }
+
     
     func transform(input: Input) -> Output {
-        return Output()
+        let frameworks = getFrameworksUseCase.execute()
+            .map { [unowned self] frameworks in
+                self.mapper.mapCellData(from: frameworks)
+            }
+            .asDriver(onErrorJustReturn: [])
+        
+        let loading = frameworks
+            .map { _ in
+                false
+            }
+            .startWith(true)
+        
+        return Output(loading: loading, frameworks: frameworks)
     }
     
 }
