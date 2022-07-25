@@ -13,14 +13,27 @@ import RxDataSources
 final class HomeViewController: MVVMViewController<HomeViewModel> {
     
     //MARK: parameters
-    private var frameworks: [CustomCollectionViewCell.Data] = []                                //ovo ne valja ovdje spremati
     var navBarTitle: String?
     private let disposeBag = DisposeBag()
     
     //MARK: View definition
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.hidesWhenStopped = true
+        
+        return activityIndicator
+    }()
+    
+    private lazy var refreshButton: UIBarButtonItem = {
+        
+        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: nil)
+        
+        return refreshButton
+    }()
+    
     private lazy var collectionView: UICollectionView = {
         
-        let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.backgroundColor = .systemBackground
         collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         collectionView.contentInsetAdjustmentBehavior = .always
@@ -29,13 +42,10 @@ final class HomeViewController: MVVMViewController<HomeViewModel> {
         if let flowLayout = layout as? UICollectionViewFlowLayout {
             flowLayout.itemSize = CGSize(width: self.view.bounds.width-20, height: 150)
         }
-    
-        collectionView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
         
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.reuseIdentifier)
-        (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).sectionInsetReference = .fromLayoutMargins
+        (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInsetReference = .fromLayoutMargins
         
         return collectionView
     }()
@@ -43,56 +53,72 @@ final class HomeViewController: MVVMViewController<HomeViewModel> {
     override func setupView() {
         configureViewController()
         view.addSubview(collectionView)
-    }
-    
-    override func bindInput() -> HomeViewModel.Input {
-        return HomeViewModel.Input()
-    }
-    
-    override func bindOutput(output: HomeViewModel.Output) {
-        output.loading.drive { _ in
-            //handle true/false, sakriti spinner
-        }
-        output.frameworks
-            .drive(collectionView.rx.items(cellIdentifier: CustomCollectionViewCell.reuseIdentifier, cellType: CustomCollectionViewCell.self) ) { [weak self] (row, item, cell) in
-                cell.configure(with: item)
-                self?.frameworks.insert(item, at: row)
-            }
-            .disposed(by: disposeBag)
+        view.addSubview(activityIndicator)
         
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        activityIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
+        collectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
     }
+    
+    
+    
     
     private func configureViewController() {
         view.backgroundColor    = .secondarySystemBackground
+        navigationItem.rightBarButtonItem = refreshButton
         title                   = navBarTitle
         navigationController?.navigationBar.prefersLargeTitles = true
     }
+    
+    override func bindInput() -> HomeViewModel.Input {
+        let load = Driver.merge(refreshButton.rx.tap.asDriver(), Driver.just(()) )
+        
+        return HomeViewModel.Input(load: load,
+                                   itemSelected: collectionView.rx.modelSelected(CustomCollectionViewCell.Data.self).asDriver())
+    }
+    
+    override func bindOutput(output: HomeViewModel.Output) {
+        
+        output.loading.drive { [weak self] isLoading in
+    
+            self?.collectionView.isHidden = isLoading
+            
+            if isLoading {
+                self?.activityIndicator.startAnimating()
+                
+            } else {
+                self?.activityIndicator.stopAnimating()
+            }
+            
+        }
+            .disposed(by: disposeBag)
+        
+        output.frameworks
+            .drive(collectionView.rx.items(cellIdentifier: CustomCollectionViewCell.reuseIdentifier, cellType: CustomCollectionViewCell.self) ) { (row, item, cell) in
+                cell.configure(with: item)
+            }
+            .disposed(by: disposeBag)
+        
+        output.navigate
+            .drive(onNext: { [weak self] scene in
+                self?.present(scene.viewController, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        
+    }
+    
 }
 
 //MARK: Extensions
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCollectionViewCell", for: indexPath) as! CustomCollectionViewCell
-     
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20 //self.homeViewModel.frameworks.count                                                         //kako reaktivno izračunati koliko ima celija
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        guard let detailsViewController = Scene.details.viewController as? DetailsViewController else {return}
-        detailsViewController.framework = self.frameworks[indexPath.row] 
-
-        
-        self.present(detailsViewController, animated: true)
-        
-        //presentSafariVC(with: url)
-        collectionView.deselectItem(at: indexPath, animated: true)
-    }
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let sectionInset = (collectionViewLayout as! UICollectionViewFlowLayout).sectionInset
@@ -106,16 +132,3 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
 }
-//
-//extension HomeViewController {
-//    typealias DataSource = RxCollectionViewSectionedReloadDataSource
-//
-//    static func dataSource() -> DataSource<SectionOfFrameworks> {
-//        .init { dataSource, collectionView, indexPath, element in
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.reuseIdentifier, for: indexPath) as! CustomCollectionViewCell
-//            cell.configure(with: element)
-//            return cell
-//        }
-//
-//    }
-//}

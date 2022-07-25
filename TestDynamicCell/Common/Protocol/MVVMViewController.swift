@@ -9,7 +9,7 @@ import UIKit
 
 class MVVMViewController<ViewModel: ViewModelType>: UIViewController {
     
-    let viewModel: ViewModel  // private let?
+    private let viewModel: ViewModel  
     
     required init(viewModel: ViewModel) {
         self.viewModel = viewModel

@@ -13,6 +13,7 @@ import RxCocoa
 
 class LoginViewController: UIViewController {
     
+    let labelTextfield = UILabel()
     let button = UIButton()
     let usernameTextField = UITextField()
     let disposeBag = DisposeBag()
@@ -23,8 +24,10 @@ class LoginViewController: UIViewController {
         view.backgroundColor = .systemBackground
         view.addSubview(button)
         view.addSubview(usernameTextField)
+        view.addSubview(labelTextfield)
         configureButton()
         configureUsernameTexfield()
+        configureLabel()
         rxBinding()
     }
     
@@ -69,6 +72,21 @@ class LoginViewController: UIViewController {
         }
     }
     
+    private func configureLabel() {
+        labelTextfield.textColor = .label
+        labelTextfield.textAlignment = .center
+        labelTextfield.font                        = UIFont.preferredFont(forTextStyle: .title2)
+        labelTextfield.adjustsFontSizeToFitWidth   = true
+        labelTextfield.text = ""
+        
+        labelTextfield.snp.makeConstraints { make in
+            make.centerY.equalToSuperview().offset(-30)
+            make.centerX.equalToSuperview()
+            
+        }
+        
+    }
+    
     private func rxBinding() {
         button.rx
             .tap
@@ -76,6 +94,14 @@ class LoginViewController: UIViewController {
                 self?.pushHomeViewVC()
             })
             .disposed(by: self.disposeBag)
+
+        usernameTextField.rx
+            .controlEvent(.allEditingEvents)
+            .withLatestFrom(usernameTextField.rx.text.orEmpty)
+            .filter { $0.count > 3 }
+            .subscribe(onNext: { text in
+                self.labelTextfield.text = text
+            }).disposed(by: disposeBag)
     }
     
     private func pushHomeViewVC() {

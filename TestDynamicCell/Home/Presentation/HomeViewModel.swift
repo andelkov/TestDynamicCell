@@ -27,28 +27,48 @@ class HomeViewModel {
 
 extension HomeViewModel: ViewModelType {
     struct Input {
-        //no inputs, dodati nešto kasnije, neki button npr
+        let load: Driver<Void>
+        let itemSelected: Driver<CustomCollectionViewCell.Data>
     }
     
     struct Output {
         let loading: Driver<Bool>
         let frameworks: Driver<[CustomCollectionViewCell.Data]>
+        let navigate: Driver<Scene>
     }
-
+    
     
     func transform(input: Input) -> Output {
-        let frameworks = getFrameworksUseCase.execute()
+        
+        
+        let navigate = input.itemSelected
+            .map { item in
+                Scene.details(data: item)
+            }
+        
+        let frameworks = input.load
+            .asObservable()
+            .flatMapLatest { [unowned self] in
+                self.getFrameworksUseCase.execute()
+            }
             .map { [unowned self] frameworks in
                 self.mapper.mapCellData(from: frameworks)
             }
             .asDriver(onErrorJustReturn: [])
-        let loading = frameworks
-            .map { _ in
-                false
-            }
-            .startWith(true)
         
-        return Output(loading: loading, frameworks: frameworks)
+        
+        let loading = Driver.merge(
+            frameworks.map({ _ in
+                false
+            }),
+            input.load.map({ _ in
+                true
+            }))
+            .distinctUntilChanged()
+        
+        return Output(loading: loading,
+                      frameworks: frameworks,
+                      navigate: navigate)
     }
     
 }

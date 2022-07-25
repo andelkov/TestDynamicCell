@@ -19,7 +19,7 @@ final class FrameworkServiceImpl: FrameworkService {
             observer(.success(MockData.frameworks))
             return Disposables.create()
         }
-        .delay(.milliseconds(1000), scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
+        .delay(.milliseconds(500), scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
     }
     
 }

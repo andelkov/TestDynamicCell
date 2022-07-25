@@ -11,7 +11,7 @@ import UIKit
 enum Scene {
     case login
     case home
-    case details
+    case details(data: CustomCollectionViewCell.Data)
 }
 
 extension Scene {
@@ -25,8 +25,12 @@ extension Scene {
             return LoginViewController()
         case .home:
             return container.resolve(type: HomeViewController.self)
-        case .details:
-            return container.resolve(type: DetailsViewController.self)
+        case .details(let data):
+            
+            let detailsVC = container.resolve(type: DetailsViewController.self)
+            detailsVC.framework = data
+            
+            return detailsVC
         }
         
     }
