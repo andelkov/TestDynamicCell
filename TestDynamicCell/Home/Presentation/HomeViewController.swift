@@ -13,7 +13,7 @@ import RxDataSources
 final class HomeViewController: MVVMViewController<HomeViewModel> {
     
     //MARK: parameters
-    private var frameworks: [CustomCollectionViewCell.Data] = []
+    private var frameworks: [CustomCollectionViewCell.Data] = []                                //ovo ne valja ovdje spremati
     var navBarTitle: String?
     private let disposeBag = DisposeBag()
     
@@ -56,7 +56,7 @@ final class HomeViewController: MVVMViewController<HomeViewModel> {
         output.frameworks
             .drive(collectionView.rx.items(cellIdentifier: CustomCollectionViewCell.reuseIdentifier, cellType: CustomCollectionViewCell.self) ) { [weak self] (row, item, cell) in
                 cell.configure(with: item)
-                self?.frameworks.append(item)
+                self?.frameworks.insert(item, at: row)
             }
             .disposed(by: disposeBag)
         
@@ -79,13 +79,13 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10 //self.homeViewModel.frameworks.count                                                         //kako reaktivno izračunati koliko ima celija
+        return 20 //self.homeViewModel.frameworks.count                                                         //kako reaktivno izračunati koliko ima celija
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         guard let detailsViewController = Scene.details.viewController as? DetailsViewController else {return}
-        detailsViewController.framework = self.frameworks[indexPath.row]
+        detailsViewController.framework = self.frameworks[indexPath.row] 
 
         
         self.present(detailsViewController, animated: true)

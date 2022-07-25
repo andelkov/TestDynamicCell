@@ -42,7 +42,6 @@ extension HomeViewModel: ViewModelType {
                 self.mapper.mapCellData(from: frameworks)
             }
             .asDriver(onErrorJustReturn: [])
-        
         let loading = frameworks
             .map { _ in
                 false
