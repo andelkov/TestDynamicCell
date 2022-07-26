@@ -86,13 +86,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		896B6A802887FEEE00F35B61 /* Swinject */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Swinject;
-			sourceTree = "<group>";
-		};
 		896B6A85288814A000F35B61 /* Details */ = {
 			isa = PBXGroup;
 			children = (
@@ -276,7 +269,6 @@
 			isa = PBXGroup;
 			children = (
 				896B6A9228895BFC00F35B61 /* Base */,
-				896B6A802887FEEE00F35B61 /* Swinject */,
 				89DD67782881A215007FC491 /* Protocol */,
 				89BE8B55287EF29D00957B99 /* Extensions */,
 			);

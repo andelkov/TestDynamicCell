@@ -7,24 +7,27 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
+
 
 class DetailsViewModel {
-    
-    
-    
+  
 }
 
 extension DetailsViewModel: ViewModelType {
     
     struct Input {
-        
+        let load: Driver<CustomCollectionViewCell.Data>
     }
     
     struct Output {
+        let frameworkRx: Driver<CustomCollectionViewCell.Data>
     }
     
     func transform(input: Input) -> Output {
-        return Output()
+    
+        
+        return Output(frameworkRx: input.load)
     }
     
 }

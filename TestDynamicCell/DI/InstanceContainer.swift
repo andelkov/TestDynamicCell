@@ -7,8 +7,6 @@
 
 import Swinject
 
-
-
 enum InstanceContainer {
     
     static let instance: Container = {
@@ -27,7 +25,7 @@ enum InstanceContainer {
             HomeViewModel(getFrameworksUseCase: $0.resolve(GetFrameworksUseCase.self)!, mapper: $0.resolve(HomeViewModelMapper.self)!)
         }
         
-        container.register(DetailsViewModel.self) {_ in 
+        container.register(DetailsViewModel.self) {_ in              // kako kad prosljedujemo data
             DetailsViewModel()
         }
         

@@ -63,7 +63,8 @@ final class HomeViewController: MVVMViewController<HomeViewModel> {
             make.center.equalToSuperview()
         }
         
-        collectionView.rx.setDelegate(self)
+        collectionView.rx
+            .setDelegate(self)
             .disposed(by: disposeBag)
     }
     

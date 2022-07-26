@@ -6,14 +6,19 @@
 //
 
 import UIKit
-import SnapKit  
+import SnapKit
+import RxSwift
+import RxCocoa
 
 //tu ide Protocol?
 
 class DetailsViewController: MVVMViewController<DetailsViewModel> {
     
-    //MARK: properties
-    var framework: CustomCollectionViewCell.Data!                                                           //ovo smije biti tu po MVVM?
+    
+    
+    //MARK: parameter
+    var framework: CustomCollectionViewCell.Data!
+    private let disposeBag = DisposeBag()//ovo smije biti tu po MVVM?
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -40,22 +45,24 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
     
  
     override func bindInput() -> DetailsViewModel.Input {
-        return DetailsViewModel.Input()
+        return DetailsViewModel.Input(load: Driver.just(framework) )
     }
     
     override func bindOutput(output: DetailsViewModel.Output) {
-        //self.framework = output.frameworks
+        
+        output.frameworkRx
+            .drive(onNext: {[unowned self] frameworkRx in
+                
+                self.imageView.image = frameworkRx.image
+                self.name.text = frameworkRx.title
+                self.descriptionLabel.text = frameworkRx.description
+            })
+            .disposed(by: disposeBag)
         
     }
     
     override func setupView() {
-        
         self.view.backgroundColor = .systemBackground
-        print(framework)
-        self.imageView.image = framework.image
-        self.name.text = framework.title
-        self.descriptionLabel.text = framework.description
-        
         setupLayout()
     }
    

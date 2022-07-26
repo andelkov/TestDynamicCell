@@ -13,10 +13,10 @@ import RxCocoa
 
 class LoginViewController: UIViewController {
     
-    let labelTextfield = UILabel()
-    let button = UIButton()
-    let usernameTextField = UITextField()
-    let disposeBag = DisposeBag()
+    private lazy var labelTextfield = UILabel()
+    private lazy var button = UIButton()
+    private lazy var usernameTextField = UITextField()
+    private lazy var disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,6 @@ class LoginViewController: UIViewController {
     }
     
     private func configureButton() {
-        //button.addTarget(self, action: #selector(pushHomeViewVC), for: .touchUpInside)
         button.setTitle("Login", for: .normal)
         button.layer.cornerRadius = 10
         button.backgroundColor = .blue
@@ -95,11 +94,10 @@ class LoginViewController: UIViewController {
             })
             .disposed(by: self.disposeBag)
 
-        usernameTextField.rx
-            .controlEvent(.allEditingEvents)
-            .withLatestFrom(usernameTextField.rx.text.orEmpty)
+        usernameTextField.rx.text.orEmpty
             .filter { $0.count > 3 }
-            .subscribe(onNext: { text in
+            .debounce(.milliseconds(300), scheduler: MainScheduler.instance) //.throttle
+            .subscribe(onNext: { [unowned self] text in
                 self.labelTextfield.text = text
             }).disposed(by: disposeBag)
     }
