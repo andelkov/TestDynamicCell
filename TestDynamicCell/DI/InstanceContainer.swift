@@ -29,6 +29,10 @@ enum InstanceContainer {
             DetailsViewModel()
         }
         
+        container.register(GetComicsUseCase.self) {
+            GetComicsUseCaseImpl(repository: $0.resolve(ComicsRepository.self)!)
+        }
+        
         return container
         
     }()

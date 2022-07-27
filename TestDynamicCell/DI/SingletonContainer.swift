@@ -20,6 +20,14 @@ enum SingletonContainer {
             FrameworkRepositoryImpl(service: $0.resolve(FrameworkService.self)!)
         }
         
+        container.register(ComicService.self) { _ in
+            ComicServiceImpl()
+        }
+        
+        container.register(ComicsRepository.self) {
+            ComicsRepositoryImpl(service: $0.resolve(ComicService.self)!)
+        }
+        
         return container
     }()
     

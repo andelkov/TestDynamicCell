@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import Swinject
 import RxSwift
+import Moya
 import RxCocoa
 
 class LoginViewController: UIViewController {
@@ -90,13 +91,14 @@ class LoginViewController: UIViewController {
         button.rx
             .tap
             .subscribe(onNext: { [weak self] in
+
                 self?.pushHomeViewVC()
             })
             .disposed(by: self.disposeBag)
-
+        
         usernameTextField.rx.text.orEmpty
             .filter { $0.count > 3 }
-            .debounce(.milliseconds(300), scheduler: MainScheduler.instance) //.throttle
+            .throttle(.milliseconds(1000), scheduler: MainScheduler.instance)
             .subscribe(onNext: { [unowned self] text in
                 self.labelTextfield.text = text
             }).disposed(by: disposeBag)
