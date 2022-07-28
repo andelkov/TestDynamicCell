@@ -12,12 +12,15 @@ import RxSwift
 
 class HomeViewModel {
     
+    private let getComicsUseCase: GetComicsUseCase
     private let getFrameworksUseCase: GetFrameworksUseCase
     private let mapper: HomeViewModelMapper
     
-    init(getFrameworksUseCase: GetFrameworksUseCase,
+    init(getComicsUseCase: GetComicsUseCase,
+         getFrameworksUseCase: GetFrameworksUseCase,
          mapper: HomeViewModelMapper) {
         
+        self.getComicsUseCase = getComicsUseCase
         self.getFrameworksUseCase = getFrameworksUseCase
         self.mapper = mapper
     }
@@ -33,42 +36,47 @@ extension HomeViewModel: ViewModelType {
     
     struct Output {
         let loading: Driver<Bool>
-        let frameworks: Driver<[CustomCollectionViewCell.Data]>
+        let comics: Driver<[CustomCollectionViewCell.Data]>
         let navigate: Driver<Scene>
+        let failure: Driver<APIError>
     }
     
     
     func transform(input: Input) -> Output {
         
+        let comicsResult = input.load
+            .asObservable()
+            .flatMapLatest(getComicsUseCase.execute)
+            .share()
+        
+        let comicsSuccess = comicsResult
+            .compactMap(\.value)                    //
+            .map(mapper.mapCellDataWithComics)
+            .asDriver(onErrorJustReturn: [])
+        
+        let comicsFailure = comicsResult
+            .compactMap(\.error)                 //
+            .asDriver(onErrorJustReturn: APIError(statusCode: 0, title: "", description: nil))
         
         let navigate = input.itemSelected
             .map { item in
                 Scene.details(data: item)
             }
         
-        let frameworks = input.load
-            .asObservable()
-            .flatMapLatest { [unowned self] in
-                self.getFrameworksUseCase.execute()
-            }
-            .map { [unowned self] frameworks in
-                self.mapper.mapCellData(from: frameworks)
-            }
-            .asDriver(onErrorJustReturn: [])
-        
         
         let loading = Driver.merge(
-            frameworks.map({ _ in
+            comicsResult.map({ _ in
                 false
-            }),
+            }).asDriver(onErrorJustReturn: false),
             input.load.map({ _ in
                 true
             }))
             .distinctUntilChanged()
         
         return Output(loading: loading,
-                      frameworks: frameworks,
-                      navigate: navigate)
+                      comics: comicsSuccess,
+                      navigate: navigate,
+                      failure: comicsFailure)
     }
     
 }

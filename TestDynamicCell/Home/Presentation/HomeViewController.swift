@@ -25,6 +25,7 @@ final class HomeViewController: MVVMViewController<HomeViewModel> {
         return activityIndicator
     }()
     
+    
     private lazy var refreshButton: UIBarButtonItem = {
         
         let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: nil)
@@ -101,10 +102,23 @@ final class HomeViewController: MVVMViewController<HomeViewModel> {
             
         }
             .disposed(by: disposeBag)
+ 
+        output.failure
+            .drive(onNext: { [weak self ]
+                error in
+                
+                let alertVC: UIAlertController = UIAlertController(title: error.title, message: error.description, preferredStyle: .alert)
+                let alertAction = UIAlertAction(title: "OK", style: .default)
+                alertVC.addAction(alertAction)
+                self?.present(alertVC, animated: true)
+                
+            })
+            .disposed(by: disposeBag)
         
-        output.frameworks
+        output.comics
             .drive(collectionView.rx.items(cellIdentifier: CustomCollectionViewCell.reuseIdentifier, cellType: CustomCollectionViewCell.self) ) { (row, item, cell) in
                 cell.configure(with: item)
+                print(item)
             }
             .disposed(by: disposeBag)
         

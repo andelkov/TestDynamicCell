@@ -8,12 +8,13 @@
 import UIKit
 
 protocol HomeViewModelMapper {
-    func mapCellData(from frameworks: [Framework]) -> [CustomCollectionViewCell.Data]
+    func mapCellDataWithFrameworks(from frameworks: [Framework]) -> [CustomCollectionViewCell.Data]
+    func mapCellDataWithComics(from comics: [Comic]) -> [CustomCollectionViewCell.Data]
 }
 
 final class HomeViewModelMapperImpl: HomeViewModelMapper {
     
-    func mapCellData(from frameworks: [Framework]) -> [CustomCollectionViewCell.Data] {
+    func mapCellDataWithFrameworks(from frameworks: [Framework]) -> [CustomCollectionViewCell.Data] {
         
         return frameworks.map { framework in
             CustomCollectionViewCell.Data(title: framework.name,
@@ -21,7 +22,16 @@ final class HomeViewModelMapperImpl: HomeViewModelMapper {
                                           image:  UIImage(named: framework.imageName),
                                           url: URL(string: framework.urlString))
         }
-        
+    }
+     
+    func mapCellDataWithComics(from comics: [Comic]) -> [CustomCollectionViewCell.Data] {
+        return comics.map { comics in
+            CustomCollectionViewCell.Data(title: comics.title,
+                                          description: comics.description ?? "",
+                                          image: UIImage(named: "arkit"),
+                                          url: comics.thumbnail.url)
+            
+        }
     }
 
 }

@@ -13,22 +13,24 @@ import Moya
 import RxCocoa
 
 protocol ComicService {
-    var provider : MoyaProvider<Marvel> { get }
-    func getComics() -> Single<[Comic]>
+    func getComics() -> Single<APIResult<[Comic]>>
 }
 
 final class ComicServiceImpl: ComicService {
     
-    internal var provider = MoyaProvider<Marvel>()
+    private let network : Network
     
-    func getComics() -> Single<[Comic]> {
-        
-        return provider.rx
-            .request(.comics)
-            .filterSuccessfulStatusAndRedirectCodes()
-            .map([Comic].self)
-        
+    init(network: Network) {
+        self.network = network  //swinject
     }
     
+    func getComics() -> Single<APIResult<[Comic]>> {
+        
+        return network.request(target: .comics, responseType: [Comic].self)
+        
+    }
+
+    
 }
+
 

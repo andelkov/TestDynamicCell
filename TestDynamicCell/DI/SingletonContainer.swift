@@ -17,15 +17,19 @@ enum SingletonContainer {
         }
         
         container.register(FrameworkRepository.self) {
-            FrameworkRepositoryImpl(service: $0.resolve(FrameworkService.self)!)
+            FrameworkRepositoryImpl(service: $0.resolve())
         }
         
-        container.register(ComicService.self) { _ in
-            ComicServiceImpl()
+        container.register(ComicService.self) {
+            ComicServiceImpl(network: $0.resolve())
         }
         
         container.register(ComicsRepository.self) {
-            ComicsRepositoryImpl(service: $0.resolve(ComicService.self)!)
+            ComicsRepositoryImpl(service: $0.resolve())
+        }
+        
+        container.register(Network.self) { _ in 
+            NetworkImpl()
         }
         
         return container
