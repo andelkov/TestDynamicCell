@@ -9,9 +9,7 @@ import Foundation
 import Moya
 
 public enum MarvelAPI {
-
     case comics
-    //case za POST
 }
 
 extension MarvelAPI: TargetType {

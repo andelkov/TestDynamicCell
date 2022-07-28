@@ -13,7 +13,7 @@ import Moya
 import RxCocoa
 
 protocol ComicService {
-    func getComics() -> Single<APIResult<[Comic]>>
+    func getComics() -> Single<APIResult<MarvelResponse<Comic>>>
 }
 
 final class ComicServiceImpl: ComicService {
@@ -24,9 +24,9 @@ final class ComicServiceImpl: ComicService {
         self.network = network  //swinject
     }
     
-    func getComics() -> Single<APIResult<[Comic]>> {
+    func getComics() -> Single<APIResult<MarvelResponse<Comic>>> {
         
-        return network.request(target: .comics, responseType: [Comic].self)
+        return network.request(target: .comics, responseType: MarvelResponse<Comic>.self)
         
     }
 

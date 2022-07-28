@@ -46,6 +46,7 @@ extension HomeViewModel: ViewModelType {
         
         let comicsResult = input.load
             .asObservable()
+            .debug()
             .flatMapLatest(getComicsUseCase.execute)
             .share()
         

@@ -16,7 +16,7 @@ final class ComicsRepositoryImpl: ComicsRepository {
         self.service = service
     }
     
-    func getComics() -> Single<APIResult<[Comic]>> {
+    func getComics() -> Single<APIResult<MarvelResponse<Comic>>> {
         return service.getComics()
     }
     

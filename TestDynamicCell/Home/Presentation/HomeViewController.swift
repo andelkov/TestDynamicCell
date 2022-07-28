@@ -104,8 +104,7 @@ final class HomeViewController: MVVMViewController<HomeViewModel> {
             .disposed(by: disposeBag)
  
         output.failure
-            .drive(onNext: { [weak self ]
-                error in
+            .drive(onNext: { [weak self] error in
                 
                 let alertVC: UIAlertController = UIAlertController(title: error.title, message: error.description, preferredStyle: .alert)
                 let alertAction = UIAlertAction(title: "OK", style: .default)

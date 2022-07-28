@@ -9,7 +9,7 @@ import UIKit
 
 protocol HomeViewModelMapper {
     func mapCellDataWithFrameworks(from frameworks: [Framework]) -> [CustomCollectionViewCell.Data]
-    func mapCellDataWithComics(from comics: [Comic]) -> [CustomCollectionViewCell.Data]
+    func mapCellDataWithComics(from comics: MarvelResponse<Comic>) -> [CustomCollectionViewCell.Data]
 }
 
 final class HomeViewModelMapperImpl: HomeViewModelMapper {
@@ -24,14 +24,15 @@ final class HomeViewModelMapperImpl: HomeViewModelMapper {
         }
     }
      
-    func mapCellDataWithComics(from comics: [Comic]) -> [CustomCollectionViewCell.Data] {
-        return comics.map { comics in
-            CustomCollectionViewCell.Data(title: comics.title,
-                                          description: comics.description ?? "",
-                                          image: UIImage(named: "arkit"),
-                                          url: comics.thumbnail.url)
-            
+    func mapCellDataWithComics(from comics: MarvelResponse<Comic>) -> [CustomCollectionViewCell.Data] {
+        return comics.data.results.map { comic in
+            CustomCollectionViewCell.Data.init(title: comic.title,
+                                               description: comic.description ?? "defaulty",
+                                               image: UIImage(named: "arkit"),
+                                               url: URL(string: "https://developer.apple.com"))
         }
+
+
     }
 
 }

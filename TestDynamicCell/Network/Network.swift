@@ -46,7 +46,7 @@ final class NetworkImpl: Network {
     private let provider = MoyaProvider<MarvelAPI>()
     
     
-    func request<T>(target: MarvelAPI, responseType: T.Type) -> Single<APIResult<T>> where T : Decodable {
+    func request<T: Decodable>(target: MarvelAPI, responseType: T.Type) -> Single<APIResult<T>> {
     
         provider.rx.request(target)
             .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
@@ -61,6 +61,4 @@ final class NetworkImpl: Network {
         print(error)
         return .just(.error(APIError.init(statusCode: 404, title: "Something went wrong", description: "Please try again")))
     }
-    
-    
 }

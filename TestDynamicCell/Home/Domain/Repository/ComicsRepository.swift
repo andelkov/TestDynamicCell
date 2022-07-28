@@ -9,5 +9,5 @@ import Foundation
 import RxSwift
 
 protocol ComicsRepository {
-    func getComics() -> Single<APIResult<[Comic]>>
+    func getComics() -> Single<APIResult<MarvelResponse<Comic>>>
 }

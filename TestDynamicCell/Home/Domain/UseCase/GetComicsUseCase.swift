@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 protocol GetComicsUseCase {
-    func execute() -> Single<APIResult<[Comic]>>
+    func execute() -> Single<APIResult<MarvelResponse<Comic>>>
 }
 
 final class GetComicsUseCaseImpl: GetComicsUseCase {
@@ -20,7 +20,7 @@ final class GetComicsUseCaseImpl: GetComicsUseCase {
         self.repository = repository
     }
     
-    func execute() -> Single<APIResult<[Comic]>> {
+    func execute() -> Single<APIResult<MarvelResponse<Comic>>> {
         repository.getComics()
     }
     
