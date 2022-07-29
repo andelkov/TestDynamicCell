@@ -45,6 +45,9 @@
 		89DCAE082891676A00C488D4 /* ComicsRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCAE072891676A00C488D4 /* ComicsRepositoryImpl.swift */; };
 		89DCAE0B2892943900C488D4 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCAE0A2892943900C488D4 /* Network.swift */; };
 		89DCAE0D2892952600C488D4 /* Marvel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCAE0C2892952600C488D4 /* Marvel.swift */; };
+		89DCAE0F2893E0CB00C488D4 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCAE0E2893E0CB00C488D4 /* APIKeys.swift */; };
+		89DCAE132893E1D400C488D4 /* ImgurAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCAE122893E1D400C488D4 /* ImgurAPI.swift */; };
+		89DCAE1528941F4500C488D4 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCAE1428941F4500C488D4 /* UIView+Ext.swift */; };
 		89DD677A2881A22E007FC491 /* Configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DD67792881A22E007FC491 /* Configurable.swift */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +92,9 @@
 		89DCAE072891676A00C488D4 /* ComicsRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsRepositoryImpl.swift; sourceTree = "<group>"; };
 		89DCAE0A2892943900C488D4 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		89DCAE0C2892952600C488D4 /* Marvel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marvel.swift; sourceTree = "<group>"; };
+		89DCAE0E2893E0CB00C488D4 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		89DCAE122893E1D400C488D4 /* ImgurAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgurAPI.swift; sourceTree = "<group>"; };
+		89DCAE1428941F4500C488D4 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		89DD67792881A22E007FC491 /* Configurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Configurable.swift; path = TestDynamicCell/Home/Data/Service/Configurable.swift; sourceTree = SOURCE_ROOT; };
 		9F55419826851485CEEEFF6F /* Pods_TestDynamicCell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDynamicCell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6E8CE4AEB2FFF3E22D75CC6 /* Pods-TestDynamicCell.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDynamicCell.debug.xcconfig"; path = "Target Support Files/Pods-TestDynamicCell/Pods-TestDynamicCell.debug.xcconfig"; sourceTree = "<group>"; };
@@ -210,6 +216,7 @@
 				89DCADF928912BFC00C488D4 /* String+Ext.swift */,
 				89DCADFB289133A200C488D4 /* Dictionary+Ext.swift */,
 				89DCADFF28914DA700C488D4 /* Date+ISO8601.swift */,
+				89DCAE1428941F4500C488D4 /* UIView+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -349,6 +356,8 @@
 			children = (
 				89DCAE0A2892943900C488D4 /* Network.swift */,
 				89DCAE0128914F4900C488D4 /* MarvelAPI.swift */,
+				89DCAE122893E1D400C488D4 /* ImgurAPI.swift */,
+				89DCAE0E2893E0CB00C488D4 /* APIKeys.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -502,6 +511,7 @@
 				89DCAE0228914F4900C488D4 /* MarvelAPI.swift in Sources */,
 				89DCAE042891660B00C488D4 /* GetComicsUseCase.swift in Sources */,
 				89DCADF82891282E00C488D4 /* ComicService.swift in Sources */,
+				89DCAE132893E1D400C488D4 /* ImgurAPI.swift in Sources */,
 				89BE8B36287C5C5800957B99 /* HomeViewController.swift in Sources */,
 				89BE8B752880254900957B99 /* FrameworkRepositoryImpl.swift in Sources */,
 				89BE8B4A287DAC7000957B99 /* HomeViewModel.swift in Sources */,
@@ -523,9 +533,11 @@
 				896B6A9B2889658200F35B61 /* DetailsViewModel.swift in Sources */,
 				89BE8B57287EF2B600957B99 /* UIViewController+Ext.swift in Sources */,
 				89BE8B34287C5C5800957B99 /* SceneDelegate.swift in Sources */,
+				89DCAE0F2893E0CB00C488D4 /* APIKeys.swift in Sources */,
 				89DCADFA28912BFC00C488D4 /* String+Ext.swift in Sources */,
 				896B6A972889609B00F35B61 /* Scene.swift in Sources */,
 				896B6A9428895C0D00F35B61 /* MVVMViewController.swift in Sources */,
+				89DCAE1528941F4500C488D4 /* UIView+Ext.swift in Sources */,
 				89BE8B72288023C400957B99 /* FrameworkRepository.swift in Sources */,
 				896B6A8A288814F100F35B61 /* DetailsViewController.swift in Sources */,
 				896B6A992889615D00F35B61 /* ViewControllerContainer.swift in Sources */,

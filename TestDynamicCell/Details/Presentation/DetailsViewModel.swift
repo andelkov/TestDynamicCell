@@ -18,16 +18,25 @@ extension DetailsViewModel: ViewModelType {
     
     struct Input {
         let load: Driver<CustomCollectionViewCell.Data>
+        let show: Observable<Bool>
     }
     
     struct Output {
         let frameworkRx: Driver<CustomCollectionViewCell.Data>
+        let showView: Driver<Bool>
     }
     
     func transform(input: Input) -> Output {
     
         
-        return Output(frameworkRx: input.load)
+        let showView = input.show
+            .map{ bool in
+                return bool
+            }
+            .asDriver(onErrorJustReturn: false)
+            .distinctUntilChanged()
+        
+        return Output(frameworkRx: input.load, showView: showView)
     }
     
 }

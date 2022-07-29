@@ -12,7 +12,7 @@ enum InstanceContainer {
     static let instance: Container = {
         let container = Container(parent: SingletonContainer.instance, defaultObjectScope: .transient)
         
-        container.register(GetFrameworksUseCase.self ) {                                           //šta je "factory:"    //jel ide GFUseCase ili GFUseCaseImpl
+        container.register(GetFrameworksUseCase.self ) {
             GetFrameworksUseCaseImpl(repository: $0.resolve())
             
         }
@@ -27,7 +27,7 @@ enum InstanceContainer {
                           mapper: $0.resolve())
         }
         
-        container.register(DetailsViewModel.self) {_ in              // kako kad prosljedujemo data
+        container.register(DetailsViewModel.self) {_ in              
             DetailsViewModel()
         }
         

@@ -9,7 +9,6 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-
 class HomeViewModel {
     
     private let getComicsUseCase: GetComicsUseCase
@@ -24,8 +23,6 @@ class HomeViewModel {
         self.getFrameworksUseCase = getFrameworksUseCase
         self.mapper = mapper
     }
-    
-    
 }
 
 extension HomeViewModel: ViewModelType {
@@ -41,22 +38,20 @@ extension HomeViewModel: ViewModelType {
         let failure: Driver<APIError>
     }
     
-    
     func transform(input: Input) -> Output {
         
         let comicsResult = input.load
             .asObservable()
-            .debug()
             .flatMapLatest(getComicsUseCase.execute)
             .share()
         
         let comicsSuccess = comicsResult
-            .compactMap(\.value)                    //
-            .map(mapper.mapCellDataWithComics)
+            .compactMap(\.value)                        //kako bi izgledala long verzija
+            .map(mapper.mapCellDataWithComics)          // odi u funkciju i vidi mapper
             .asDriver(onErrorJustReturn: [])
         
         let comicsFailure = comicsResult
-            .compactMap(\.error)                 //
+            .compactMap(\.error)
             .asDriver(onErrorJustReturn: APIError(statusCode: 0, title: "", description: nil))
         
         let navigate = input.itemSelected

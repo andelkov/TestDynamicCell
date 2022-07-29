@@ -43,7 +43,7 @@ extension MarvelAPI: TargetType {
                           "formatType": "comic",
                           "orderBy": "-onsaleDate",
                           "dateDescriptor": "lastWeek",
-                          "limit": 50]
+                          "limit": 100]
         
         parameters.update(other: authParams)
         

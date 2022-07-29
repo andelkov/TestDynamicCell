@@ -25,7 +25,6 @@ final class HomeViewController: MVVMViewController<HomeViewModel> {
         return activityIndicator
     }()
     
-    
     private lazy var refreshButton: UIBarButtonItem = {
         
         let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: nil)
@@ -69,9 +68,6 @@ final class HomeViewController: MVVMViewController<HomeViewModel> {
             .setDelegate(self)
             .disposed(by: disposeBag)
     }
-    
-    
-    
     
     private func configureViewController() {
         view.backgroundColor    = .secondarySystemBackground
@@ -117,7 +113,6 @@ final class HomeViewController: MVVMViewController<HomeViewModel> {
         output.comics
             .drive(collectionView.rx.items(cellIdentifier: CustomCollectionViewCell.reuseIdentifier, cellType: CustomCollectionViewCell.self) ) { (row, item, cell) in
                 cell.configure(with: item)
-                print(item)
             }
             .disposed(by: disposeBag)
         
@@ -129,7 +124,6 @@ final class HomeViewController: MVVMViewController<HomeViewModel> {
         
         
     }
-    
 }
 
 //MARK: Extensions

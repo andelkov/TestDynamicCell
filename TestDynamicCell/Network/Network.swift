@@ -38,6 +38,8 @@ protocol Network {
     func request<T: Decodable>(target: MarvelAPI, responseType: T.Type) -> Single<APIResult<T>>
 }
 
+
+
 final class NetworkImpl: Network {
     
     static let publicKey = "ffc09e4c41b35eba39d92383c06b01dc"
@@ -47,7 +49,7 @@ final class NetworkImpl: Network {
     
     
     func request<T: Decodable>(target: MarvelAPI, responseType: T.Type) -> Single<APIResult<T>> {
-    
+        
         provider.rx.request(target)
             .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))

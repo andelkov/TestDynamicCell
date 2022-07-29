@@ -32,10 +32,12 @@ class LoginViewController: UIViewController {
         rxBinding()
     }
     
+    
+    
     private func configureButton() {
         button.setTitle("Login", for: .normal)
         button.layer.cornerRadius = 10
-        button.backgroundColor = .blue
+        button.backgroundColor = .systemRed
         
         button.snp.makeConstraints { make in
             make.bottom.right.equalToSuperview().offset(-50)
@@ -91,7 +93,6 @@ class LoginViewController: UIViewController {
         button.rx
             .tap
             .subscribe(onNext: { [weak self] in
-
                 self?.pushHomeViewVC()
             })
             .disposed(by: self.disposeBag)

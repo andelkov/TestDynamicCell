@@ -28,7 +28,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         let label = UILabel(frame: .zero)
         label.textAlignment = .left
         label.textColor = .systemBlue
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         label.font = UIFont.boldSystemFont(ofSize: 16.0)
         return label
     }()
@@ -36,7 +36,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()                                               // view = private layz var
         
-        label.numberOfLines = 0
+        label.numberOfLines = 10
         label.textAlignment = .natural
         label.textColor = .label
         return label
@@ -73,6 +73,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
         
         name.snp.makeConstraints { make in
             make.left.equalTo(imageView.snp.right).offset(Constants.padding)
+            make.right.equalToSuperview().offset(-Constants.padding)
             make.centerY.equalTo(imageView.snp.centerY)
         }
         
