@@ -34,6 +34,9 @@
 		89BE8B72288023C400957B99 /* FrameworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE8B71288023C400957B99 /* FrameworkRepository.swift */; };
 		89BE8B752880254900957B99 /* FrameworkRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE8B742880254900957B99 /* FrameworkRepositoryImpl.swift */; };
 		89BE8B78288144C000957B99 /* FrameworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE8B77288144C000957B99 /* FrameworkService.swift */; };
+		89CFA1B628972E0700C66DE6 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CFA1B528972E0700C66DE6 /* UIImageView+Ext.swift */; };
+		89CFA1BA28972E9800C66DE6 /* ImgurService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CFA1B928972E9800C66DE6 /* ImgurService.swift */; };
+		89CFA1BE28972F7900C66DE6 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CFA1BD28972F7800C66DE6 /* File.swift */; };
 		89DCADF82891282E00C488D4 /* ComicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCADF72891282E00C488D4 /* ComicService.swift */; };
 		89DCADFA28912BFC00C488D4 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCADF928912BFC00C488D4 /* String+Ext.swift */; };
 		89DCADFC289133A200C488D4 /* Dictionary+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCADFB289133A200C488D4 /* Dictionary+Ext.swift */; };
@@ -83,6 +86,9 @@
 		89BE8B71288023C400957B99 /* FrameworkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkRepository.swift; sourceTree = "<group>"; };
 		89BE8B742880254900957B99 /* FrameworkRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkRepositoryImpl.swift; sourceTree = "<group>"; };
 		89BE8B77288144C000957B99 /* FrameworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkService.swift; sourceTree = "<group>"; };
+		89CFA1B528972E0700C66DE6 /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
+		89CFA1B928972E9800C66DE6 /* ImgurService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgurService.swift; sourceTree = "<group>"; };
+		89CFA1BD28972F7800C66DE6 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		89DCADF72891282E00C488D4 /* ComicService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicService.swift; sourceTree = "<group>"; };
 		89DCADF928912BFC00C488D4 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		89DCADFB289133A200C488D4 /* Dictionary+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Ext.swift"; sourceTree = "<group>"; };
@@ -115,6 +121,8 @@
 		896B6A85288814A000F35B61 /* Details */ = {
 			isa = PBXGroup;
 			children = (
+				89CFA1BB28972F6A00C66DE6 /* Domain */,
+				89CFA1B728972E7500C66DE6 /* Data */,
 				896B6A86288814BA00F35B61 /* Presentation */,
 			);
 			path = Details;
@@ -217,6 +225,7 @@
 				89DCADFB289133A200C488D4 /* Dictionary+Ext.swift */,
 				89DCADFF28914DA700C488D4 /* Date+ISO8601.swift */,
 				89DCAE1428941F4500C488D4 /* UIView+Ext.swift */,
+				89CFA1B528972E0700C66DE6 /* UIImageView+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -349,6 +358,38 @@
 				89DCADF72891282E00C488D4 /* ComicService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		89CFA1B728972E7500C66DE6 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				89CFA1B828972E7C00C66DE6 /* Service */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		89CFA1B828972E7C00C66DE6 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				89CFA1B928972E9800C66DE6 /* ImgurService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		89CFA1BB28972F6A00C66DE6 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				89CFA1BC28972F7300C66DE6 /* Model */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		89CFA1BC28972F7300C66DE6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				89CFA1BD28972F7800C66DE6 /* File.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		89DCAE092892942D00C488D4 /* Network */ = {
@@ -527,7 +568,9 @@
 				89BE8B4C287E9F3D00957B99 /* CustomCollectionViewCell.swift in Sources */,
 				896B6A822887FEF800F35B61 /* InstanceContainer.swift in Sources */,
 				89BE8B32287C5C5800957B99 /* AppDelegate.swift in Sources */,
+				89CFA1B628972E0700C66DE6 /* UIImageView+Ext.swift in Sources */,
 				89DCADFE28914D6B00C488D4 /* Comic.swift in Sources */,
+				89CFA1BA28972E9800C66DE6 /* ImgurService.swift in Sources */,
 				896B6A8D288959C700F35B61 /* SingletonContainer.swift in Sources */,
 				89DCAE062891672600C488D4 /* ComicsRepository.swift in Sources */,
 				896B6A9B2889658200F35B61 /* DetailsViewModel.swift in Sources */,
@@ -537,6 +580,7 @@
 				89DCADFA28912BFC00C488D4 /* String+Ext.swift in Sources */,
 				896B6A972889609B00F35B61 /* Scene.swift in Sources */,
 				896B6A9428895C0D00F35B61 /* MVVMViewController.swift in Sources */,
+				89CFA1BE28972F7900C66DE6 /* File.swift in Sources */,
 				89DCAE1528941F4500C488D4 /* UIView+Ext.swift in Sources */,
 				89BE8B72288023C400957B99 /* FrameworkRepository.swift in Sources */,
 				896B6A8A288814F100F35B61 /* DetailsViewController.swift in Sources */,

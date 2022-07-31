@@ -10,6 +10,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import Kingfisher
+import Moya
 
 //tu ide Protocol?
 
@@ -17,6 +18,8 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
     
     //MARK: parameter
     var framework: CustomCollectionViewCell.Data!
+    private let provider = MoyaProvider<Imgur>()
+    private var uploadResult: UploadResult?
     private let disposeBag = DisposeBag()
     
     private lazy var imageView: UIImageView = {
@@ -61,7 +64,7 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
     
     private lazy var uploadButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Upload description", for: .normal)
+        button.setTitle("Upload poster", for: .normal)
         button.layer.cornerRadius = 10
         button.backgroundColor = .systemRed
         
@@ -83,7 +86,7 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
         
         output.frameworkRx
             .drive(onNext: {[unowned self] frameworkRx in
-
+                
                 self.imageView.kf.setImage(with: frameworkRx.url,placeholder: UIImage(named: "arkit"), options: [.transition(.fade(0.3))])
                 self.name.text = frameworkRx.title
                 self.descriptionLabel.text = frameworkRx.description
@@ -98,6 +101,36 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
             
         }
         .disposed(by: disposeBag)
+        
+        uploadButton.rx.tap.asObservable()
+            .bind { _ in
+                
+                self.provider.request(.upload(self.imageView.snapUIImageView()),
+                                         callbackQueue: DispatchQueue.main,
+                                         progress: nil,
+                                         completion: { [weak self] result in
+                    guard let self = self else { return }
+                    
+                    
+                    // 6
+                    switch result {
+                    case .success(let result):
+                        do {
+                            let upload = try result.map(ImgurResponse<UploadResult>.self)
+                            
+                            self.uploadResult = upload.data
+                            print(self.uploadResult)
+                            
+                        } catch {
+                            print(error)
+                        }
+                    case .failure:
+                       fatalError("image upload didnt work")
+                    }
+                
+                })
+            }
+            .disposed(by: disposeBag)
         
     }
     
@@ -152,5 +185,4 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
             make.height.equalTo(50)
         }
     }
-    
 }
