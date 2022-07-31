@@ -1,4 +1,4 @@
-platform :ios, '10.0'
+platform :ios, '12.0'
 use_frameworks!
 
 target 'TestDynamicCell' do
@@ -10,5 +10,6 @@ target 'TestDynamicCell' do
   pod 'RxDataSources', '~> 5.0'
   pod 'Moya', '~> 15.0'
   pod 'Moya/RxSwift'
-
+  pod 'Kingfisher', '~> 7.0'
+  
 end

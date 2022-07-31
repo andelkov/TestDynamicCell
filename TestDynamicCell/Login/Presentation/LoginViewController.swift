@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 import Swinject
 import RxSwift
-import Moya
 import RxCocoa
 
 class LoginViewController: UIViewController {

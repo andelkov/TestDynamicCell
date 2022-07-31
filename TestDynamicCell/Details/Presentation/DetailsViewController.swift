@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 //tu ide Protocol?
 
@@ -82,10 +83,11 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
         
         output.frameworkRx
             .drive(onNext: {[unowned self] frameworkRx in
-                
-                self.imageView.image = frameworkRx.image
+
+                self.imageView.kf.setImage(with: frameworkRx.url,placeholder: UIImage(named: "arkit"), options: [.transition(.fade(0.3))])
                 self.name.text = frameworkRx.title
                 self.descriptionLabel.text = frameworkRx.description
+                
             })
             .disposed(by: disposeBag)
         
@@ -114,9 +116,10 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
         view.addSubview(uploadButton)
         
         imageView.snp.makeConstraints { make in
-            make.height.width.equalTo(100)
-            make.top.equalTo(view.safeAreaInsets).offset(20)
-            make.centerX.equalTo(view.snp.centerX)
+            make.height.equalTo(300)
+            make.width.equalTo(100)
+            make.top.equalToSuperview().offset(20)
+            make.centerX.equalToSuperview()
         }
         
         name.snp.makeConstraints { make in
