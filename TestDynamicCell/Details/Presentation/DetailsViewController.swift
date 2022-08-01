@@ -79,7 +79,10 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
         
         let uploadButton = uploadButton.rx.tap.asDriver()
         
-        return DetailsViewModel.Input(load: Driver.just(framework), show: toggleAction, upload: uploadButton, image: imageView)
+        return DetailsViewModel.Input(load: Driver.just(framework),
+                                      show: toggleAction,
+                                      upload: uploadButton,
+                                      image: (imageView.image ?? UIImage(named: "arkit"))! )
     }
     
     override func bindOutput(output: DetailsViewModel.Output) {
@@ -103,10 +106,6 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
         }
         .disposed(by: disposeBag)
         
-        output.upload.drive { _ in
-            
-        }
-        .disposed(by: disposeBag)
         
     }
     

@@ -27,12 +27,9 @@ enum InstanceContainer {
                           mapper: $0.resolve())
         }
         
-        
         container.register(GetComicsUseCase.self) {
             GetComicsUseCaseImpl(repository: $0.resolve())
         }
-        
-        
         
         container.register(ImgurUseCase.self) {
             ImgurUseCaseImpl(repository: $0.resolve())

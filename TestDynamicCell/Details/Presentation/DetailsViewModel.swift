@@ -26,17 +26,17 @@ extension DetailsViewModel: ViewModelType {
         let load: Driver<CustomCollectionViewCell.Data>
         let show: Observable<Bool>
         let upload: Driver<Void>
-        let image: UIImageView
+        let image: UIImage
     }
     
     struct Output {
         let frameworkRx: Driver<CustomCollectionViewCell.Data>
         let showView: Driver<Bool>
-        let upload: Driver<Void>
+        let upload: ()
     }
     
     func transform(input: Input) -> Output {
-    
+        
         let showView = input.show
             .map{ bool in
                 return bool
@@ -44,10 +44,14 @@ extension DetailsViewModel: ViewModelType {
             .asDriver(onErrorJustReturn: false)
             .distinctUntilChanged()
         
+        
+        
         let uploadComic = input.upload
-            .asDriver()
-        
-        
+            .drive { [weak self] _ in
+                
+                self?.imgurUseCase.execute(image: input.image)
+            }
+            .dispose()
         
         return Output(frameworkRx: input.load, showView: showView, upload: uploadComic)
     }
