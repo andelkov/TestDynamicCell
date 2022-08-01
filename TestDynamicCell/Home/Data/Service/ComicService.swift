@@ -21,7 +21,7 @@ final class ComicServiceImpl: ComicService {
     private let network : Network
     
     init(network: Network) {
-        self.network = network  //swinject
+        self.network = network                                          //swinject
     }
     
     func getComics() -> Single<APIResult<MarvelResponse<Comic>>> {

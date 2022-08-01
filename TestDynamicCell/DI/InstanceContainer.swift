@@ -36,6 +36,13 @@ enum InstanceContainer {
         }
         
         
+        container.register(DetailsViewSnapper.self) { _ in
+            DetailsViewSnapperImpl()
+        }
+        
+        container.register(DetailsViewModel.self) {
+            DetailsViewModel(snapper: $0.resolve())
+        }
         
         return container
         

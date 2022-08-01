@@ -8,7 +8,7 @@
 import Foundation
 import Moya
 
-public enum Imgur {
+public enum ImgurAPI {
     
     static private let clientId = APIKeys.Imgur.clientID
     
@@ -16,7 +16,7 @@ public enum Imgur {
     case delete(String)
 }
 
-extension Imgur: TargetType {
+extension ImgurAPI: TargetType {
   // 1
   public var baseURL: URL {
     return URL(string: "https://api.imgur.com/3")!
@@ -61,7 +61,7 @@ extension Imgur: TargetType {
   // 6
   public var headers: [String: String]? {
     return [
-      "Authorization": "Client-ID \(Imgur.clientId)",
+      "Authorization": "Client-ID \(ImgurAPI.clientId)",
       "Content-Type": "application/json"
     ]
   }

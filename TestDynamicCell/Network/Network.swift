@@ -38,15 +38,9 @@ protocol Network {
     func request<T: Decodable>(target: MarvelAPI, responseType: T.Type) -> Single<APIResult<T>>
 }
 
-
-
 final class NetworkImpl: Network {
     
-    static let publicKey = "ffc09e4c41b35eba39d92383c06b01dc"
-    static let privateKey = "52f3765e4a96eadda42e77e402e82cba86d2f81d"
-    
     private let provider = MoyaProvider<MarvelAPI>()
-    
     
     func request<T: Decodable>(target: MarvelAPI, responseType: T.Type) -> Single<APIResult<T>> {
         
@@ -63,4 +57,6 @@ final class NetworkImpl: Network {
         print(error)
         return .just(.error(APIError.init(statusCode: 404, title: "Something went wrong", description: "Please try again")))
     }
+    
+    
 }

@@ -15,5 +15,4 @@ extension UIViewController {
         safariVC.preferredControlTintColor = .systemBlue
         present(safariVC, animated: true)
     }
-    
 }

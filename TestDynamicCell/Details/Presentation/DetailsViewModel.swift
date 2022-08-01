@@ -9,9 +9,12 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-
 class DetailsViewModel {
-  
+    private let snapper: DetailsViewSnapper
+    
+    init(snapper: DetailsViewSnapper) {
+        self.snapper = snapper
+    }
 }
 
 extension DetailsViewModel: ViewModelType {

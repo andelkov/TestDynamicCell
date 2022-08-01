@@ -5,8 +5,8 @@
 //  Created by Andjelko Vico on 27.07.2022..
 //
 
-import Foundation
 import Moya
+import UIKit
 
 public enum MarvelAPI {
     case comics
