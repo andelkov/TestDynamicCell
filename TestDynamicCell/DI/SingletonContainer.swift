@@ -32,6 +32,10 @@ enum SingletonContainer {
             NetworkImpl()
         }
         
+        container.register(ImgurService.self) { _ in
+            ImgurServiceImpl()
+        }
+        
         return container
     }()
     

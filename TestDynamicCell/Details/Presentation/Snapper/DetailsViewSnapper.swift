@@ -12,7 +12,7 @@ protocol DetailsViewSnapper {
     func snapUIImageView(image: UIImageView) -> UIImage
 }
 
-final class DetailsViewSnapperImpl {
+final class DetailsViewSnapperImpl: DetailsViewSnapper {
     
     func snapUIImageView(image: UIImageView) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(image.bounds.size, true, UIScreen.main.scale)

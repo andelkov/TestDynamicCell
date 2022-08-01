@@ -35,9 +35,9 @@ extension MarvelAPI: TargetType {
     
     public var task: Task {
         let ts = "\(Date().timeIntervalSince1970)"
-        let hash = (ts + NetworkImpl.privateKey + NetworkImpl.publicKey).md5
+        let hash = (ts + APIKeys.Marvel.privateKey + APIKeys.Marvel.publicKey).md5
         
-        let authParams = ["apikey": NetworkImpl.publicKey, "ts": ts, "hash": hash] as [String : Any]
+        let authParams = ["apikey": APIKeys.Marvel.publicKey, "ts": ts, "hash": hash] as [String : Any]
 
         var parameters: [String : Any] = ["format": "comic",
                           "formatType": "comic",

@@ -10,9 +10,11 @@ import RxSwift
 import RxCocoa
 
 class DetailsViewModel {
+    private let uploadComicsUseCase : UploadComicsUseCase
     private let snapper: DetailsViewSnapper
     
-    init(snapper: DetailsViewSnapper) {
+    init(uploadComicsUseCase: UploadComicsUseCase, snapper: DetailsViewSnapper) {
+        self.uploadComicsUseCase = uploadComicsUseCase
         self.snapper = snapper
     }
 }

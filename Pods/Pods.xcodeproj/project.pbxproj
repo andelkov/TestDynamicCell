@@ -997,12 +997,12 @@
 		9A13E35718937530D8892AA604B2B497 /* TargetType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TargetType.swift; path = Sources/Moya/TargetType.swift; sourceTree = "<group>"; };
 		9A7EF517C2494A6CD4FDA0DCBF79281F /* Maybe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Maybe.swift; path = RxSwift/Traits/PrimitiveSequence/Maybe.swift; sourceTree = "<group>"; };
 		9AF6AD50157EDCF3EEAF1181916BAC9B /* Alamofire-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Alamofire-Info.plist"; sourceTree = "<group>"; };
-		9B030E13AB81E026A4A2C449496B2E04 /* Pods_TestDynamicCell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDynamicCell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B030E13AB81E026A4A2C449496B2E04 /* Pods-TestDynamicCell */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-TestDynamicCell"; path = Pods_TestDynamicCell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B512BC3A0359A08B8830A60BAB2ECBD /* ItemEvents.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ItemEvents.swift; path = RxCocoa/iOS/Events/ItemEvents.swift; sourceTree = "<group>"; };
 		9B9613F75CD7F2A32E2523602429F294 /* HTTPHeaders.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HTTPHeaders.swift; path = Source/HTTPHeaders.swift; sourceTree = "<group>"; };
 		9BB51F30C9ED2342C4089655618B776E /* ParameterEncoder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ParameterEncoder.swift; path = Source/ParameterEncoder.swift; sourceTree = "<group>"; };
 		9D912E26006A8381841D3EA59F5F4DF0 /* InfiniteSequence.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InfiniteSequence.swift; path = Platform/DataStructures/InfiniteSequence.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E7D2FFD7BB71C05039051E615718772 /* ConstraintInsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsetTarget.swift; path = Source/ConstraintInsetTarget.swift; sourceTree = "<group>"; };
 		9F7D85E0347A442B339DC663D7B9B12E /* _RX.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = _RX.h; path = RxCocoa/Runtime/include/_RX.h; sourceTree = "<group>"; };
 		A00C76BA6EAED5B6FBC0F91856B769D2 /* Bag+Rx.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Bag+Rx.swift"; path = "RxSwift/Extensions/Bag+Rx.swift"; sourceTree = "<group>"; };
@@ -1463,6 +1463,7 @@
 				E61315674D20E98F56F75A82B9BC7266 /* WKWebView+Rx.swift */,
 				1379455948CB69DF46A546B5F0FD4FE4 /* Support Files */,
 			);
+			name = RxCocoa;
 			path = RxCocoa;
 			sourceTree = "<group>";
 		};
@@ -1495,6 +1496,7 @@
 				1D69C38244875CD613EEE9138F765550 /* UnavailableItems.swift */,
 				BABDC21C14286EE49BC8D07188160522 /* Support Files */,
 			);
+			name = Swinject;
 			path = Swinject;
 			sourceTree = "<group>";
 		};
@@ -1556,6 +1558,7 @@
 				EBDAF9919772D98DCDBAF6F3D8BA4990 /* Validation.swift */,
 				1E3494D43A6F03CA7A97AE5B51CD70F6 /* Support Files */,
 			);
+			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -1581,7 +1584,7 @@
 				D51C3D0C53D23B97B032E3BDD4F82C82 /* Differentiator */,
 				C3F44C782D64D7EB20B61CE3844EBFAD /* Kingfisher */,
 				3756A9BBE41ABEE8DCBF5BCA6972C4DA /* Moya */,
-				9B030E13AB81E026A4A2C449496B2E04 /* Pods_TestDynamicCell.framework */,
+				9B030E13AB81E026A4A2C449496B2E04 /* Pods-TestDynamicCell */,
 				BC432FD48A5932251F1CAFBC4BF74894 /* RxCocoa */,
 				692F92D73EC27270EA9CC9575C3E65B6 /* RxDataSources */,
 				FF8B264DFE802855D5D67E7CDDABFC3C /* RxRelay */,
@@ -1624,6 +1627,7 @@
 				6D2B994319DC5AE67C6F007A1E49D3D5 /* Utilities.swift */,
 				BA94896CD4A30DC23EC9BEB23EFA5987 /* Support Files */,
 			);
+			name = Differentiator;
 			path = Differentiator;
 			sourceTree = "<group>";
 		};
@@ -1674,6 +1678,7 @@
 				DA7BF91706DAC3A9301B817A05844097 /* RxSwift */,
 				9CF9C00ADAE64DCC867B4A36119496AE /* Support Files */,
 			);
+			name = Moya;
 			path = Moya;
 			sourceTree = "<group>";
 		};
@@ -1743,6 +1748,7 @@
 				E52A38CD03C7A4772546B2F82D1532D8 /* WKInterfaceImage+Kingfisher.swift */,
 				613D1D4A3A337E6DBE96E48FEAA015B3 /* Support Files */,
 			);
+			name = Kingfisher;
 			path = Kingfisher;
 			sourceTree = "<group>";
 		};
@@ -1926,6 +1932,7 @@
 				E5B9E644BC55BD39051DAA0D8EFD7D7C /* Zip+Collection.swift */,
 				7BE61192818827AB8B1EDEB2781936D3 /* Support Files */,
 			);
+			name = RxSwift;
 			path = RxSwift;
 			sourceTree = "<group>";
 		};
@@ -1987,6 +1994,7 @@
 				114AFBE9784B1589D7EB256DEC818A20 /* UILayoutSupport+Extensions.swift */,
 				41DC6448F79C8E460C25B092570B4ACA /* Support Files */,
 			);
+			name = SnapKit;
 			path = SnapKit;
 			sourceTree = "<group>";
 		};
@@ -2057,6 +2065,7 @@
 				973538487F481CA21E6458ECB012442D /* ViewTransition.swift */,
 				BAEB70C7EF667E40F6725E14C8540D3F /* Support Files */,
 			);
+			name = RxDataSources;
 			path = RxDataSources;
 			sourceTree = "<group>";
 		};
@@ -2070,6 +2079,7 @@
 				5FE28A8187E54A954788445BA08F6DE4 /* Utils.swift */,
 				F4E29B6C5BB5AD24A9B36AE9E50767E0 /* Support Files */,
 			);
+			name = RxRelay;
 			path = RxRelay;
 			sourceTree = "<group>";
 		};
@@ -2422,7 +2432,7 @@
 			);
 			name = "Pods-TestDynamicCell";
 			productName = Pods_TestDynamicCell;
-			productReference = 9B030E13AB81E026A4A2C449496B2E04 /* Pods_TestDynamicCell.framework */;
+			productReference = 9B030E13AB81E026A4A2C449496B2E04 /* Pods-TestDynamicCell */;
 			productType = "com.apple.product-type.framework";
 		};
 		E8022D22FAA6690B5E1C379C1BCE1491 /* Kingfisher */ = {

@@ -27,21 +27,20 @@ enum InstanceContainer {
                           mapper: $0.resolve())
         }
         
-        container.register(DetailsViewModel.self) {_ in              
-            DetailsViewModel()
-        }
-        
         container.register(GetComicsUseCase.self) {
             GetComicsUseCaseImpl(repository: $0.resolve())
         }
         
+        container.register(UploadComicsUseCase.self) {
+            UploadComicsUseCaseImpl(repository: $0.resolve())
+        }
         
         container.register(DetailsViewSnapper.self) { _ in
             DetailsViewSnapperImpl()
         }
         
         container.register(DetailsViewModel.self) {
-            DetailsViewModel(snapper: $0.resolve())
+            DetailsViewModel(uploadComicsUseCase: $0.resolve(), snapper: $0.resolve())
         }
         
         return container

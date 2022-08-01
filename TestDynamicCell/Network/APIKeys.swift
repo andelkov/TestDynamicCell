@@ -14,7 +14,7 @@ struct APIKeys {
 
 struct MarvelAPIKeys {
     let publicKey = "ffc09e4c41b35eba39d92383c06b01dc"
-    private let privateKey = "52f3765e4a96eadda42e77e402e82cba86d2f81d"
+    let privateKey = "52f3765e4a96eadda42e77e402e82cba86d2f81d"
 }
 
 struct ImgurAPIKeys {

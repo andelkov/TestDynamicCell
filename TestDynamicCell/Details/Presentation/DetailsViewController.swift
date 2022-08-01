@@ -18,8 +18,6 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
     
     //MARK: parameter
     var framework: CustomCollectionViewCell.Data!
-    private let provider = MoyaProvider<Imgur>()
-    private var uploadResult: UploadResult?
     private let disposeBag = DisposeBag()
     
     private lazy var imageView: UIImageView = {
@@ -106,30 +104,8 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
         uploadButton.rx.tap.asObservable()
             .bind { _ in
                 
-                self.provider.request(.upload(self.imageView.snapUIImageView()),
-                                         callbackQueue: DispatchQueue.main,
-                                         progress: nil,
-                                         completion: { [weak self] result in
-                    guard let self = self else { return }
-                    
-                    
-                    // 6
-                    switch result {
-                    case .success(let result):
-                        do {
-                            let upload = try result.map(ImgurResponse<UploadResult>.self)
-                            
-                            self.uploadResult = upload.data
-                            print(self.uploadResult)
-                            
-                        } catch {
-                            print(error)
-                        }
-                    case .failure:
-                       fatalError("image upload didnt work")
-                    }
+                uploadComicsUseCase.execute(image: )
                 
-                })
             }
             .disposed(by: disposeBag)
         
