@@ -27,12 +27,19 @@ enum InstanceContainer {
                           mapper: $0.resolve())
         }
         
+        
         container.register(GetComicsUseCase.self) {
             GetComicsUseCaseImpl(repository: $0.resolve())
         }
         
-        container.register(UploadComicsUseCase.self) {
-            UploadComicsUseCaseImpl(repository: $0.resolve())
+        
+        
+        container.register(ImgurUseCase.self) {
+            ImgurUseCaseImpl(repository: $0.resolve())
+        }
+        
+        container.register(ImgurRepository.self) {
+            ImgurRepositoryImpl(service: $0.resolve())
         }
         
         container.register(DetailsViewSnapper.self) { _ in
@@ -40,7 +47,7 @@ enum InstanceContainer {
         }
         
         container.register(DetailsViewModel.self) {
-            DetailsViewModel(uploadComicsUseCase: $0.resolve(), snapper: $0.resolve())
+            DetailsViewModel(imgurUseCase: $0.resolve(), snapper: $0.resolve())
         }
         
         return container

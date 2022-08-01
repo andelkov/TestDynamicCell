@@ -77,7 +77,9 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
             .distinctUntilChanged()
             .asObservable()
         
-        return DetailsViewModel.Input(load: Driver.just(framework), show: toggleAction )
+        let uploadButton = uploadButton.rx.tap.asDriver()
+        
+        return DetailsViewModel.Input(load: Driver.just(framework), show: toggleAction, upload: uploadButton, image: imageView)
     }
     
     override func bindOutput(output: DetailsViewModel.Output) {
@@ -101,13 +103,10 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
         }
         .disposed(by: disposeBag)
         
-        uploadButton.rx.tap.asObservable()
-            .bind { _ in
-                
-                uploadComicsUseCase.execute(image: )
-                
-            }
-            .disposed(by: disposeBag)
+        output.upload.drive { _ in
+            
+        }
+        .disposed(by: disposeBag)
         
     }
     

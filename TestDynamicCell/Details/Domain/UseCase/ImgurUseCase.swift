@@ -1,5 +1,5 @@
 //
-//  UploadComicsUseCase.swift
+//  ImgurUseCaseImpl.swift
 //  TestDynamicCell
 //
 //  Created by Andjelko Vico on 01.08.2022..
@@ -8,11 +8,11 @@
 import Foundation
 import UIKit
 
-protocol UploadComicsUseCase {
+protocol ImgurUseCase {
     func execute(image: UIImage)
 }
 
-final class UploadComicsUseCaseImpl: UploadComicsUseCase {
+final class ImgurUseCaseImpl: ImgurUseCase {
     
     private let repository : ImgurRepository
     

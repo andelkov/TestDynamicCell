@@ -38,8 +38,9 @@
 		89CFA1BA28972E9800C66DE6 /* ImgurService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CFA1B928972E9800C66DE6 /* ImgurService.swift */; };
 		89CFA1BE28972F7900C66DE6 /* UploadResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CFA1BD28972F7800C66DE6 /* UploadResult.swift */; };
 		89CFA1C22897E4DA00C66DE6 /* DetailsViewSnapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CFA1C12897E4DA00C66DE6 /* DetailsViewSnapper.swift */; };
-		89CFA1C52898018C00C66DE6 /* UploadComicsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CFA1C42898018C00C66DE6 /* UploadComicsUseCase.swift */; };
+		89CFA1C52898018C00C66DE6 /* ImgurUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CFA1C42898018C00C66DE6 /* ImgurUseCase.swift */; };
 		89CFA1C9289803BD00C66DE6 /* ImgurRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CFA1C8289803BD00C66DE6 /* ImgurRepository.swift */; };
+		89CFA1CC2898121800C66DE6 /* ImgurRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CFA1CB2898121800C66DE6 /* ImgurRepositoryImpl.swift */; };
 		89DCADF82891282E00C488D4 /* ComicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCADF72891282E00C488D4 /* ComicService.swift */; };
 		89DCADFA28912BFC00C488D4 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCADF928912BFC00C488D4 /* String+Ext.swift */; };
 		89DCADFC289133A200C488D4 /* Dictionary+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCADFB289133A200C488D4 /* Dictionary+Ext.swift */; };
@@ -91,8 +92,9 @@
 		89CFA1B928972E9800C66DE6 /* ImgurService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgurService.swift; sourceTree = "<group>"; };
 		89CFA1BD28972F7800C66DE6 /* UploadResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadResult.swift; sourceTree = "<group>"; };
 		89CFA1C12897E4DA00C66DE6 /* DetailsViewSnapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewSnapper.swift; sourceTree = "<group>"; };
-		89CFA1C42898018C00C66DE6 /* UploadComicsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadComicsUseCase.swift; sourceTree = "<group>"; };
+		89CFA1C42898018C00C66DE6 /* ImgurUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgurUseCase.swift; sourceTree = "<group>"; };
 		89CFA1C8289803BD00C66DE6 /* ImgurRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgurRepository.swift; sourceTree = "<group>"; };
+		89CFA1CB2898121800C66DE6 /* ImgurRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgurRepositoryImpl.swift; sourceTree = "<group>"; };
 		89DCADF72891282E00C488D4 /* ComicService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicService.swift; sourceTree = "<group>"; };
 		89DCADF928912BFC00C488D4 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		89DCADFB289133A200C488D4 /* Dictionary+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Ext.swift"; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 		89CFA1B728972E7500C66DE6 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				89CFA1CA2898121000C66DE6 /* Repository */,
 				89CFA1B828972E7C00C66DE6 /* Service */,
 			);
 			path = Data;
@@ -412,7 +415,7 @@
 		89CFA1C32898017800C66DE6 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				89CFA1C42898018C00C66DE6 /* UploadComicsUseCase.swift */,
+				89CFA1C42898018C00C66DE6 /* ImgurUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -421,6 +424,14 @@
 			isa = PBXGroup;
 			children = (
 				89CFA1C8289803BD00C66DE6 /* ImgurRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		89CFA1CA2898121000C66DE6 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				89CFA1CB2898121800C66DE6 /* ImgurRepositoryImpl.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -600,11 +611,12 @@
 				89BE8B48287DA2B600957B99 /* MockData.swift in Sources */,
 				89BE8B4C287E9F3D00957B99 /* CustomCollectionViewCell.swift in Sources */,
 				896B6A822887FEF800F35B61 /* InstanceContainer.swift in Sources */,
-				89CFA1C52898018C00C66DE6 /* UploadComicsUseCase.swift in Sources */,
+				89CFA1C52898018C00C66DE6 /* ImgurUseCase.swift in Sources */,
 				89BE8B32287C5C5800957B99 /* AppDelegate.swift in Sources */,
 				89CFA1C9289803BD00C66DE6 /* ImgurRepository.swift in Sources */,
 				89CFA1B628972E0700C66DE6 /* UIImageView+Ext.swift in Sources */,
 				89DCADFE28914D6B00C488D4 /* Comic.swift in Sources */,
+				89CFA1CC2898121800C66DE6 /* ImgurRepositoryImpl.swift in Sources */,
 				89CFA1BA28972E9800C66DE6 /* ImgurService.swift in Sources */,
 				896B6A8D288959C700F35B61 /* SingletonContainer.swift in Sources */,
 				89DCAE062891672600C488D4 /* ComicsRepository.swift in Sources */,

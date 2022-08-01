@@ -24,13 +24,14 @@ enum SingletonContainer {
             ComicServiceImpl(network: $0.resolve())
         }
         
+        container.register(Network.self) { _ in 
+            NetworkImpl()
+        }
+        
         container.register(ComicsRepository.self) {
             ComicsRepositoryImpl(service: $0.resolve())
         }
         
-        container.register(Network.self) { _ in 
-            NetworkImpl()
-        }
         
         container.register(ImgurService.self) { _ in
             ImgurServiceImpl()
