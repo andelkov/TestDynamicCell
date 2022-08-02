@@ -18,7 +18,8 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
     
     //MARK: parameter
     var framework: CustomCollectionViewCell.Data!
-    private let disposeBag = DisposeBag()
+    var provider = MoyaProvider<ImgurAPI>()
+    let disposeBag = DisposeBag()
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -70,6 +71,16 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
         
     }()
     
+    private lazy var progressBar: UIProgressView = {
+        let progressBar = UIProgressView(progressViewStyle: .bar)
+        progressBar.setProgress(0.5, animated: true)
+        progressBar.trackTintColor = .systemGray
+        progressBar.tintColor = .systemRed
+        progressBar.isHidden = true
+        
+        return progressBar
+        
+    }()
     
     override func bindInput() -> DetailsViewModel.Input {
         
@@ -77,12 +88,35 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
             .distinctUntilChanged()
             .asObservable()
         
-        let uploadButton = uploadButton.rx.tap.asDriver()
+        uploadButton.rx.tap
+            .asObservable()
+            .subscribe { [weak self] _ in
+                self?.provider.request(.upload((self?.imageView.image ?? UIImage(named: "arkit"))!),
+                                       callbackQueue: DispatchQueue.main,
+                                       progress: { [weak self] progress in
+                    self?.progressBar.isHidden = false
+                    self?.progressBar.setProgress(Float(progress.progress), animated: true)
+                }, completion: { response in
+                    
+                    switch response {
+                    case .success(let result):
+                        do {
+                            let upload = try result.map(ImgurResponse<UploadResult>.self)
+                            print(upload.data)
+                            self?.showUploadDoneMessage()
+                            
+                        } catch {
+                            print(error)
+                        }
+                    case .failure:
+                        print("Failed to upload the image.")
+                    }
+                })
+            }
+            .disposed(by: disposeBag)
         
         return DetailsViewModel.Input(load: Driver.just(framework),
-                                      show: toggleAction,
-                                      upload: uploadButton,
-                                      image: (imageView.image ?? UIImage(named: "arkit"))! )
+                                      show: toggleAction)
     }
     
     override func bindOutput(output: DetailsViewModel.Output) {
@@ -102,6 +136,7 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
             
             isShowing ? self?.descriptionLabel.fadeIn() : self?.descriptionLabel.fadeOut()
             isShowing ? self?.uploadButton.fadeIn() : self?.uploadButton.fadeOut()
+            isShowing ? self?.progressBar.fadeIn() : self?.progressBar.fadeOut()
             
         }
         .disposed(by: disposeBag)
@@ -114,7 +149,6 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
         setupLayout()
     }
     
-    
     private func setupLayout() {
         view.addSubview(imageView)
         view.addSubview(name)
@@ -122,6 +156,7 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
         view.addSubview(toggleSwitch)
         view.addSubview(descriptionLabel)
         view.addSubview(uploadButton)
+        view.addSubview(progressBar)
         
         imageView.snp.makeConstraints { make in
             make.height.equalTo(300)
@@ -159,5 +194,33 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
             make.left.equalToSuperview().offset(50)
             make.height.equalTo(50)
         }
+        
+        progressBar.snp.makeConstraints { make in
+            make.bottom.equalTo(uploadButton.snp.top).offset(-10)
+            make.centerX.equalTo(uploadButton.snp.centerX)
+            make.left.right.equalTo(uploadButton)
+        }
     }
+}
+
+extension DetailsViewController {
+    
+    func showUploadDoneMessage() {
+        
+        let dialogMessage = UIAlertController(title: "Success",
+                                              message: "Image successfully uploaded to Imgur!",
+                                              preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "OK",
+                               style: .default,
+                               handler: { [weak self] (action) -> Void  in
+            self?.progressBar.isHidden = true
+        })
+        
+        dialogMessage.addAction(ok)
+        
+        self.present(dialogMessage, animated: true, completion: nil)
+        
+    }
+    
 }

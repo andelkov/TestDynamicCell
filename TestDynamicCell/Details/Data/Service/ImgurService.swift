@@ -30,7 +30,7 @@ final class ImgurServiceImpl: ImgurService {
                         print(upload.data)
                         
                     } catch {
-                        print(error)
+                        print(error)  //može bolje
                     }
                 case .failure:
                     fatalError("image upload didnt work")
