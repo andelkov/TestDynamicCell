@@ -18,8 +18,9 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
     
     //MARK: parameter
     var framework: CustomCollectionViewCell.Data!
-    var provider = MoyaProvider<ImgurAPI>()
     let disposeBag = DisposeBag()
+    
+    let provider = NetworkImpl()
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
@@ -88,32 +89,7 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
             .distinctUntilChanged()
             .asObservable()
         
-        uploadButton.rx.tap
-            .asObservable()
-            .subscribe { [weak self] _ in
-                self?.provider.request(.upload((self?.imageView.image ?? UIImage(named: "arkit"))!),
-                                       callbackQueue: DispatchQueue.main,
-                                       progress: { [weak self] progress in
-                    self?.progressBar.isHidden = false
-                    self?.progressBar.setProgress(Float(progress.progress), animated: true)
-                }, completion: { response in
-                    
-                    switch response {
-                    case .success(let result):
-                        do {
-                            let upload = try result.map(ImgurResponse<UploadResult>.self)
-                            print(upload.data)
-                            self?.showUploadDoneMessage()
-                            
-                        } catch {
-                            print(error)
-                        }
-                    case .failure:
-                        print("Failed to upload the image.")
-                    }
-                })
-            }
-            .disposed(by: disposeBag)
+        
         
         return DetailsViewModel.Input(load: Driver.just(framework),
                                       show: toggleAction)
@@ -133,6 +109,8 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
             .disposed(by: disposeBag)
         
         output.showView.drive { [weak self] isShowing in
+            
+            print(self?.provider.upload(target: .upload, responseType: JSONPlaceholder.self)!)
             
             isShowing ? self?.descriptionLabel.fadeIn() : self?.descriptionLabel.fadeOut()
             isShowing ? self?.uploadButton.fadeIn() : self?.uploadButton.fadeOut()

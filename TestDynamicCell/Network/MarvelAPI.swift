@@ -5,8 +5,8 @@
 //  Created by Andjelko Vico on 27.07.2022..
 //
 
-import Moya
 import UIKit
+import Moya
 
 public enum MarvelAPI {
     case comics
@@ -34,6 +34,7 @@ extension MarvelAPI: TargetType {
     }
     
     public var task: Task {
+        
         let ts = "\(Date().timeIntervalSince1970)"
         let hash = (ts + APIKeys.Marvel.privateKey + APIKeys.Marvel.publicKey).md5
         

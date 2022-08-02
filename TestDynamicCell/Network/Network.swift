@@ -41,6 +41,7 @@ protocol Network {
 final class NetworkImpl: Network {
     
     private let provider = MoyaProvider<MarvelAPI>()
+    private let uploadProvider = MoyaProvider<JSONPlaceholderAPI>()
     
     func request<T: Decodable>(target: MarvelAPI, responseType: T.Type) -> Single<APIResult<T>> {
         
@@ -58,5 +59,22 @@ final class NetworkImpl: Network {
         return .just(.error(APIError.init(statusCode: 404, title: "Something went wrong", description: "Please try again")))
     }
     
+    func upload<T: Decodable>(target: JSONPlaceholderAPI, responseType: T.Type) -> Single<JSONPlaceholderResult<T>> {
+        
+        uploadProvider.rx.request(target)
+            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+            .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+            .map{try $0.filterSuccessfulStatusCodes() }
+            .map{T.self}
+            .map{JSONPlaceholderResult<T>.success($0 as! T)}
+            .catch{ self.uploadRequestError(error: $0 )}
+            
+        
+    }
+    
+    private func uploadRequestError<T: Decodable>(error: Error) -> Single<JSONPlaceholderResult<T>> {
+        print(error)
+        return .just(.error(NetworkErrorConditions.init(badUrl: "bad url", dataCannotHandled: "Data cant be handel") ))
+    }
     
 }

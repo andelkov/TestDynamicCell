@@ -21,6 +21,7 @@ final class HomeViewController: MVVMViewController<HomeViewModel> {
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.hidesWhenStopped = true
+        activityIndicator.color = .systemRed
         
         return activityIndicator
     }()

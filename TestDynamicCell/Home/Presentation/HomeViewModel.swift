@@ -47,7 +47,7 @@ extension HomeViewModel: ViewModelType {
         
         let comicsSuccess = comicsResult
             .compactMap(\.value)                        //kako bi izgledala long verzija
-            .map(mapper.mapCellDataWithComics)          // odi u funkciju i vidi mapper
+            .map(mapper.mapCellDataWithComics)
             .asDriver(onErrorJustReturn: [])
         
         let comicsFailure = comicsResult
@@ -76,8 +76,3 @@ extension HomeViewModel: ViewModelType {
     }
     
 }
-
-
-
-
-

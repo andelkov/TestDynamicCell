@@ -26,8 +26,8 @@ final class HomeViewModelMapperImpl: HomeViewModelMapper {
      
     func mapCellDataWithComics(from comics: MarvelResponse<Comic>) -> [CustomCollectionViewCell.Data] {
         
-        //let comicsWithDescription = comics.data.results.filter({$0.description != nil})
-        return comics.data.results.map { comic in
+        let comicsWithDescription = comics.data.results.filter({$0.description != nil})
+        return comicsWithDescription.map { comic in
             CustomCollectionViewCell.Data.init(title: comic.title,
                                                description: comic.description ?? "defaulty",
                                                image: UIImage(named: "arkit"),

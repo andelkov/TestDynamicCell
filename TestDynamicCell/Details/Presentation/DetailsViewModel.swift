@@ -25,15 +25,11 @@ extension DetailsViewModel: ViewModelType {
     struct Input {
         let load: Driver<CustomCollectionViewCell.Data>
         let show: Observable<Bool>
-//        let upload:
-        //let image: UIImage
     }
     
     struct Output {
         let frameworkRx: Driver<CustomCollectionViewCell.Data>
         let showView: Driver<Bool>
-        //let upload
-        //let loading: Driver<Bool>
     }
     
     func transform(input: Input) -> Output {

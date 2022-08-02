@@ -27,7 +27,7 @@ final class CustomCollectionViewCell: UICollectionViewCell {
     private lazy var name: UILabel = {
         let label = UILabel(frame: .zero)
         label.textAlignment = .left
-        label.textColor = .systemBlue
+        label.textColor = .systemRed
         label.numberOfLines = 2
         label.font = UIFont.boldSystemFont(ofSize: 16.0)
         return label
