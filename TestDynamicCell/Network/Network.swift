@@ -41,7 +41,8 @@ protocol Network {
 final class NetworkImpl: Network {
     
     private let provider = MoyaProvider<MarvelAPI>()
-    private let uploadProvider = MoyaProvider<JSONPlaceholderAPI>()
+    
+    private let uploadProvider = MoyaProvider<JSONPlaceholderAPI>(plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))])
     
     func request<T: Decodable>(target: MarvelAPI, responseType: T.Type) -> Single<APIResult<T>> {
         
@@ -64,11 +65,7 @@ final class NetworkImpl: Network {
         uploadProvider.rx.request(target)
             .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
-            .map{try $0.filterSuccessfulStatusCodes() }
-            .map{T.self}
-            .map{JSONPlaceholderResult<T>.success($0 as! T)}
-            .catch{ self.uploadRequestError(error: $0 )}
-            
+            .map{try $0.map(T.self) as! JSONPlaceholderResult<T>}
         
     }
     
@@ -78,3 +75,12 @@ final class NetworkImpl: Network {
     }
     
 }
+
+
+
+//            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+//            .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+//            .map{try $0.filterSuccessfulStatusCodes() }
+//            .map{T.self}
+//            .map{JSONPlaceholderResult<T>.success($0 as! T)}
+//            .catch{ self.uploadRequestError(error: $0)}

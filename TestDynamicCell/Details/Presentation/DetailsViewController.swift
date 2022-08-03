@@ -90,9 +90,11 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
             .asObservable()
         
         
+        let uploadButton = uploadButton.rx.tap.asDriver()
         
         return DetailsViewModel.Input(load: Driver.just(framework),
-                                      show: toggleAction)
+                                      show: toggleAction,
+                                      upload: uploadButton)
     }
     
     override func bindOutput(output: DetailsViewModel.Output) {
@@ -110,14 +112,33 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
         
         output.showView.drive { [weak self] isShowing in
             
-            print(self?.provider.upload(target: .upload, responseType: JSONPlaceholder.self)!)
-            
             isShowing ? self?.descriptionLabel.fadeIn() : self?.descriptionLabel.fadeOut()
             isShowing ? self?.uploadButton.fadeIn() : self?.uploadButton.fadeOut()
             isShowing ? self?.progressBar.fadeIn() : self?.progressBar.fadeOut()
             
         }
         .disposed(by: disposeBag)
+        
+        output.uploadSuccess
+            .drive(onNext: { [weak self] _ in
+                
+                let alertVC = UIAlertController(title: "Upload successfull", message: "Nice job mate.", preferredStyle: .alert)
+                let alertAction = UIAlertAction(title: "Thanks bro", style: .default)
+                alertVC.addAction(alertAction)
+                self?.present(alertVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        output.failure
+            .drive(onNext: { [weak self] _ in
+                
+                let alertVC = UIAlertController(title: "Upload failed", message: "We'll get em next time", preferredStyle: .alert)
+                let alertAction = UIAlertAction(title: "OK", style: .default)
+                alertVC.addAction(alertAction)
+                self?.present(alertVC, animated: true)
+            })
+            .disposed(by: disposeBag)
+
         
         
     }
@@ -179,26 +200,4 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
             make.left.right.equalTo(uploadButton)
         }
     }
-}
-
-extension DetailsViewController {
-    
-    func showUploadDoneMessage() {
-        
-        let dialogMessage = UIAlertController(title: "Success",
-                                              message: "Image successfully uploaded to Imgur!",
-                                              preferredStyle: .alert)
-        
-        let ok = UIAlertAction(title: "OK",
-                               style: .default,
-                               handler: { [weak self] (action) -> Void  in
-            self?.progressBar.isHidden = true
-        })
-        
-        dialogMessage.addAction(ok)
-        
-        self.present(dialogMessage, animated: true, completion: nil)
-        
-    }
-    
 }

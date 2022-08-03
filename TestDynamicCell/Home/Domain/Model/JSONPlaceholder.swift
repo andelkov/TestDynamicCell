@@ -8,11 +8,16 @@
 import Foundation
 
 struct JSONPlaceholder: Codable {
-    let userID: String
-    let id: String
-    let title: String
-    let body: String
+    var userId: Int
+    var id: Int
+    var title: String
+    var body: String
+    
+    enum CodingKeys: String, CodingKey {
+        case userId, id, title, body
+    }
 }
+
 
 enum JSONPlaceholderResult<JSONPlaceholder> {
     case success(JSONPlaceholder)

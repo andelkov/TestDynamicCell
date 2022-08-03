@@ -8,6 +8,8 @@
 import Foundation
 import Moya
 
+fileprivate var acceptableStatusCodes: [Int] { return Array(200..<500) }
+
 public enum JSONPlaceholderAPI {
     case upload
 }
@@ -41,23 +43,21 @@ extension JSONPlaceholderAPI: TargetType {
   public var task: Task {
     switch self {
     case .upload:
-        let mockRequest = ["userID": 1, "title": 2, "title": "random", "body": "random body"] as [String : Any]
         
+        let mockRequest = JSONPlaceholder(userId: 1, id: 101, title: "Custom title", body: "Custom body")
         
-        return .requestParameters(parameters: mockRequest, encoding: URLEncoding.default)
+        return .requestJSONEncodable(mockRequest)
     }
   }
 
   // 6
-  public var headers: [String: String]? {
-    return [
-        "Content-type": "application/json; charset=UTF-8",
-    ]
+  public var headers: [String : String]? {
+      return ["Content-type": "application/json; charset=UTF-8"]
   }
 
   // 7
   public var validationType: ValidationType {
-    return .successCodes
+      return .successCodes//.customCodes(acceptableStatusCodes)
   }
 }
 
