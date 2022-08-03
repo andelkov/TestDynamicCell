@@ -11,13 +11,11 @@ import RxCocoa
 
 class DetailsViewModel {
     
-    private let imgurUseCase : ImgurUseCase
+    private let uploadJSONUseCase: UploadJSONUseCase
     private let snapper: DetailsViewSnapper
     
-    let network = NetworkImpl()
-    
-    init(imgurUseCase: ImgurUseCase, snapper: DetailsViewSnapper) {
-        self.imgurUseCase = imgurUseCase
+    init(uploadJSONUseCase: UploadJSONUseCase, snapper: DetailsViewSnapper) {
+        self.uploadJSONUseCase = uploadJSONUseCase
         self.snapper = snapper
     }
 }
@@ -25,6 +23,7 @@ class DetailsViewModel {
 extension DetailsViewModel: ViewModelType {
     
     struct Input {
+        let text: Driver<String?>
         let load: Driver<CustomCollectionViewCell.Data>
         let show: Observable<Bool>
         let upload: Driver<Void>
@@ -40,6 +39,12 @@ extension DetailsViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
+        var JSONForUpload = JSONPlaceholder(userId: 1, id: 101, title: "Default", body: "Default")
+        
+        input.text.drive(onNext: { userEmail in
+            JSONForUpload = JSONPlaceholder(userId: 1, id: 101, title: "Default", body: userEmail ?? "no description")
+        })
+        
         let showView = input.show
             .map{ bool in
                 return bool
@@ -51,7 +56,7 @@ extension DetailsViewModel: ViewModelType {
         let uploadResult = input.upload
             .asObservable()
             .flatMapLatest({ _ in
-                self.network.upload(target: .upload, responseType: [JSONPlaceholder].self)
+                self.uploadJSONUseCase.upload(data: JSONForUpload)
             })
             .share()
         

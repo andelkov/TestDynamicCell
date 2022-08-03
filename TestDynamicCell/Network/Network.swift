@@ -36,6 +36,7 @@ struct APIError: Error {
 
 protocol Network {
     func request<T: Decodable>(target: MarvelAPI, responseType: T.Type) -> Single<APIResult<T>>
+    func upload<T: Decodable>(target: JSONPlaceholderAPI, responseType: T.Type) -> Single<JSONPlaceholderResult<T>>
 }
 
 final class NetworkImpl: Network {
@@ -65,22 +66,16 @@ final class NetworkImpl: Network {
         uploadProvider.rx.request(target)
             .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
-            .map{try $0.map(T.self) as! JSONPlaceholderResult<T>}
-        
+            .map{try $0.map(T.self)}
+            .map{JSONPlaceholderResult<T>.success($0)}
+            //.catch{ self.uploadRequestError(error: $0)} ili   .catch{ self.uploadRequestError(error: JSONPlaceholderResult<T>.success($0) )}
+           
     }
     
     private func uploadRequestError<T: Decodable>(error: Error) -> Single<JSONPlaceholderResult<T>> {
-        print(error)
+        print("The error is \(error)")
         return .just(.error(NetworkErrorConditions.init(badUrl: "bad url", dataCannotHandled: "Data cant be handel") ))
     }
     
 }
 
-
-
-//            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
-//            .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
-//            .map{try $0.filterSuccessfulStatusCodes() }
-//            .map{T.self}
-//            .map{JSONPlaceholderResult<T>.success($0 as! T)}
-//            .catch{ self.uploadRequestError(error: $0)}

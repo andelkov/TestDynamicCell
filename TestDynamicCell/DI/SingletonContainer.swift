@@ -32,6 +32,10 @@ enum SingletonContainer {
             ComicsRepositoryImpl(service: $0.resolve())
         }
         
+        container.register(JSONPlaceholderService.self) { 
+            JSONPlaceholderServiceImpl(network: $0.resolve() )
+        }
+        
         
         container.register(ImgurService.self) { _ in
             ImgurServiceImpl()

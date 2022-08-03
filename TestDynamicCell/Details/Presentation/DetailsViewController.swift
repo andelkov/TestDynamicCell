@@ -64,7 +64,7 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
     
     private lazy var uploadButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Upload poster", for: .normal)
+        button.setTitle("Upload description", for: .normal)
         button.layer.cornerRadius = 10
         button.backgroundColor = .systemRed
         
@@ -92,7 +92,8 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
         
         let uploadButton = uploadButton.rx.tap.asDriver()
         
-        return DetailsViewModel.Input(load: Driver.just(framework),
+        return DetailsViewModel.Input(text: descriptionLabel.rx.text.asDriver(),
+                                      load: Driver.just(framework),
                                       show: toggleAction,
                                       upload: uploadButton)
     }
@@ -114,14 +115,13 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
             
             isShowing ? self?.descriptionLabel.fadeIn() : self?.descriptionLabel.fadeOut()
             isShowing ? self?.uploadButton.fadeIn() : self?.uploadButton.fadeOut()
-            isShowing ? self?.progressBar.fadeIn() : self?.progressBar.fadeOut()
             
         }
         .disposed(by: disposeBag)
         
         output.uploadSuccess
             .drive(onNext: { [weak self] _ in
-                
+                print("activated error")
                 let alertVC = UIAlertController(title: "Upload successfull", message: "Nice job mate.", preferredStyle: .alert)
                 let alertAction = UIAlertAction(title: "Thanks bro", style: .default)
                 alertVC.addAction(alertAction)
@@ -132,14 +132,13 @@ class DetailsViewController: MVVMViewController<DetailsViewModel> {
         output.failure
             .drive(onNext: { [weak self] _ in
                 
+                print("activated error")
                 let alertVC = UIAlertController(title: "Upload failed", message: "We'll get em next time", preferredStyle: .alert)
                 let alertAction = UIAlertAction(title: "OK", style: .default)
                 alertVC.addAction(alertAction)
                 self?.present(alertVC, animated: true)
             })
             .disposed(by: disposeBag)
-
-        
         
     }
     

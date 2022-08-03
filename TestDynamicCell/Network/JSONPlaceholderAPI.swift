@@ -8,10 +8,8 @@
 import Foundation
 import Moya
 
-fileprivate var acceptableStatusCodes: [Int] { return Array(200..<500) }
-
 public enum JSONPlaceholderAPI {
-    case upload
+    case upload(Codable)
 }
 
 extension JSONPlaceholderAPI: TargetType {
@@ -42,11 +40,9 @@ extension JSONPlaceholderAPI: TargetType {
   // 5
   public var task: Task {
     switch self {
-    case .upload:
-        
-        let mockRequest = JSONPlaceholder(userId: 1, id: 101, title: "Custom title", body: "Custom body")
-        
-        return .requestJSONEncodable(mockRequest)
+    case .upload(let data):
+
+        return .requestJSONEncodable(data as! JSONPlaceholder)
     }
   }
 
@@ -57,7 +53,7 @@ extension JSONPlaceholderAPI: TargetType {
 
   // 7
   public var validationType: ValidationType {
-      return .successCodes//.customCodes(acceptableStatusCodes)
+      return .successCodes
   }
 }
 

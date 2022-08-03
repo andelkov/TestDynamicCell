@@ -31,6 +31,7 @@ enum InstanceContainer {
             GetComicsUseCaseImpl(repository: $0.resolve())
         }
         
+        
         container.register(ImgurUseCase.self) {
             ImgurUseCaseImpl(repository: $0.resolve())
         }
@@ -39,12 +40,24 @@ enum InstanceContainer {
             ImgurRepositoryImpl(service: $0.resolve())
         }
         
+        
+        
+        container.register(UploadJSONUseCase.self) {
+            UploadJSONUseCaseImpl(repository: $0.resolve())
+        }
+        
+        container.register(JSONPlaceholderRepository.self) {
+            JSONPlaceholderRepositoryImpl(service: $0.resolve())
+        }
+        
         container.register(DetailsViewSnapper.self) { _ in
             DetailsViewSnapperImpl()
         }
         
+        
+        
         container.register(DetailsViewModel.self) {
-            DetailsViewModel(imgurUseCase: $0.resolve(), snapper: $0.resolve())
+            DetailsViewModel(uploadJSONUseCase: $0.resolve(), snapper: $0.resolve())
         }
         
         return container
